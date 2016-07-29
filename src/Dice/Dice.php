@@ -3,9 +3,6 @@ namespace DiceBag\Dice;
 
 class Dice extends AbstractDice
 {
-    /** @var int $value */
-    protected $value;
-
     /**
      * Dice constructor.
      *
