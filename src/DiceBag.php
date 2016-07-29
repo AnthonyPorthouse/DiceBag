@@ -51,7 +51,7 @@ class DiceBag
      */
     public function getTotal() : int
     {
-        return array_reduce($this->dicePools, function(int $prev, DicePool $pool) {
+        return array_reduce($this->dicePools, function (int $prev, DicePool $pool) {
             return $prev + $pool->getTotal();
         }, 0);
     }

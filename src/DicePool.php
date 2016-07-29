@@ -33,7 +33,7 @@ class DicePool
      */
     public function getTotal() : int
     {
-        return array_reduce($this->dice, function(int $prev, DiceInterface $dice) {
+        return array_reduce($this->dice, function (int $prev, DiceInterface $dice) {
             return $prev + $dice->value();
         }, 0);
     }
