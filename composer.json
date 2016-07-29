@@ -1,0 +1,25 @@
+{
+    "name": "porthou/dicebag",
+    "description": "Create Dice roll results from standard dice notation",
+    "keywords": [
+        "dice",
+        "rpg"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anthony Porthouse",
+            "email": "anthony@porthou.se"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DiceBag\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">= 7",
+        "symfony/console": "^3.1",
+        "symfony/var-dumper": "^3.1"
+    }
+}
