@@ -19,7 +19,6 @@
     },
     "require": {
         "php": ">= 7",
-        "symfony/console": "^3.1",
-        "symfony/var-dumper": "^3.1"
+        "symfony/console": "^3.1"
     }
 }
