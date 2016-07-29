@@ -13,7 +13,7 @@ class DiceBag
      */
     public function __construct(array $diceStrings)
     {
-        $this->dicePools = array_map(function(string $diceString) {
+        $this->dicePools = array_map(function (string $diceString) {
             return new DicePool($diceString);
         }, $diceStrings);
     }
