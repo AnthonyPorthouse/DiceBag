@@ -15,27 +15,30 @@ class DiceFactory
 
         preg_match(self::DICE_FORMAT, $diceString, $tokens);
 
+        $method = '';
+
         switch ($tokens['type'] ?? null) {
             case 'd':
-                $pool = [];
-                for ($i = 0; $i < ($tokens['quantity'] ?: 1); $i++) {
-                    $pool[] = $this->makeBasicDice($tokens['size']);
-                }
-
-                return $pool;
+                $method = 'makeBasicDice';
                 break;
-
             case 'f':
-                $pool = [];
-                for ($i = 0; $i < ($tokens['quantity'] ?: 1); $i++) {
-                    $pool[] = $this->makeFudgeDice();
-                }
-                return $pool;
+                $method = 'makeFudgeDice';
                 break;
-
             default:
-                return [new Modifier($diceString)];
+                $method = null;
+                break;
         }
+
+        if (!$method) {
+            return [$this->makeModifier($diceString)];
+        }
+
+        $pool = [];
+        for ($i = 0; $i < ($tokens['quantity'] ?: 1); $i++) {
+            $pool[] = $this->$method($tokens['size']);
+        }
+
+        return $pool;
     }
 
     private function makeBasicDice(int $size) : DiceInterface
@@ -46,5 +49,10 @@ class DiceFactory
     private function makeFudgeDice() : DiceInterface
     {
         return new FudgeDice;
+    }
+
+    private function makeModifier(int $value) : DiceInterface
+    {
+        return new Modifier($value);
     }
 }

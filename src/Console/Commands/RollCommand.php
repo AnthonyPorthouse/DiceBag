@@ -24,7 +24,7 @@ class RollCommand extends Command
     {
         $diceBag = DiceBag::factory($input->getArgument('dice'));
 
-        $output->writeln($diceBag->php());
+        $output->writeln($diceBag->__toString());
 
         return 0;
     }
