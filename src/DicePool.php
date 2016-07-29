@@ -19,7 +19,7 @@ class DicePool
     /**
      * Returns the array of Dice
      *
-     * @return DiceInterface[];
+     * @return DiceInterface[]
      */
     public function getDice() : array
     {
