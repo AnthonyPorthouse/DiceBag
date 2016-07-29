@@ -7,6 +7,7 @@ class DiceFactory
 
     /**
      * @param string $diceString
+     *
      * @return DiceInterface[]
      */
     public function makeDice(string $diceString) : array
@@ -15,37 +16,55 @@ class DiceFactory
 
         preg_match(self::DICE_FORMAT, $diceString, $tokens);
 
-        switch ($tokens['type'] ?? null) {
-            case 'd':
-                $method = 'makeBasicDice';
-                break;
-            case 'f':
-                $method = 'makeFudgeDice';
-                break;
-            default:
-                return [$this->makeModifier($diceString)];
+        if (!isset($tokens['type'])) {
+            return $this->makeModifier($diceString);
         }
 
+        if ($tokens['type'] == 'd') {
+            return $this->makeBasicDice($tokens['size'], $tokens['quantity'] ?: 1);
+        }
+
+        if ($tokens['type'] == 'f') {
+            return $this->makeFudgeDice($tokens['quantity'] ?: 1);
+        }
+    }
+
+    /**
+     * @param int $size
+     * @param int $quantity
+     *
+     * @return DiceInterface[]
+     */
+    private function makeBasicDice(int $size, int $quantity = 1) : array
+    {
         $pool = [];
-        for ($i = 0; $i < ($tokens['quantity'] ?: 1); $i++) {
-            $pool[] = $this->$method($tokens['size']);
+        for ($i = 0; $i < $quantity; $i++) {
+            $pool[] = new Dice($size);
         }
-
         return $pool;
     }
 
-    private function makeBasicDice(int $size) : DiceInterface
+    /**
+     * @param int $quantity
+     *
+     * @return DiceInterface[]
+     */
+    private function makeFudgeDice(int $quantity = 1) : array
     {
-        return new Dice($size);
+        $pool = [];
+        for ($i = 0; $i < $quantity; $i++) {
+            $pool[] = new FudgeDice();
+        }
+        return $pool;
     }
 
-    private function makeFudgeDice() : DiceInterface
+    /**
+     * @param int $value
+     *
+     * @return DiceInterface[]
+     */
+    private function makeModifier(int $value) : array
     {
-        return new FudgeDice;
-    }
-
-    private function makeModifier(int $value) : DiceInterface
-    {
-        return new Modifier($value);
+        return [new Modifier($value)];
     }
 }
