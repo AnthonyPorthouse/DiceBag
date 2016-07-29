@@ -12,6 +12,9 @@
             "email": "anthony@porthou.se"
         }
     ],
+    "bin": [
+        "bin/dicebag"
+    ],
     "autoload": {
         "psr-4": {
             "DiceBag\\": "src/"
