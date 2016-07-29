@@ -15,8 +15,6 @@ class DiceFactory
 
         preg_match(self::DICE_FORMAT, $diceString, $tokens);
 
-        $method = '';
-
         switch ($tokens['type'] ?? null) {
             case 'd':
                 $method = 'makeBasicDice';
@@ -25,12 +23,7 @@ class DiceFactory
                 $method = 'makeFudgeDice';
                 break;
             default:
-                $method = null;
-                break;
-        }
-
-        if (!$method) {
-            return [$this->makeModifier($diceString)];
+                return [$this->makeModifier($diceString)];
         }
 
         $pool = [];

@@ -13,7 +13,7 @@ class DiceBag
      */
     public function __construct(array $diceStrings)
     {
-        $this->dicePools = array_map(function(string $diceString) {
+        $this->dicePools = array_map(function (string $diceString) {
             return new DicePool($diceString);
         }, $diceStrings);
     }
@@ -35,13 +35,23 @@ class DiceBag
     }
 
     /**
+     * Returns the array of DicePools
+     *
+     * @return DicePool[]
+     */
+    public function getDicePools() : array
+    {
+        return $this->dicePools;
+    }
+
+    /**
      * Gets the total value of a DicePool
      *
      * @return int
      */
     public function getTotal() : int
     {
-        return array_reduce($this->dicePools, function(int $prev, DicePool $pool) {
+        return array_reduce($this->dicePools, function (int $prev, DicePool $pool) {
             return $prev + $pool->getTotal();
         }, 0);
     }
