@@ -23,13 +23,13 @@ class DicePool
      */
     public function getTotal() : int
     {
-        return array_reduce($this->pool, function (int $prev, DiceInterface $dice) {
+        return array_reduce($this->pool, function(int $prev, DiceInterface $dice) {
             return $prev + $dice->value();
         }, 0);
     }
 
     public function __toString() : string
     {
-        return '[' . implode(' ', $this->pool) .  ' (' . $this->getTotal() . ')]';
+        return '[' . implode(' ', $this->pool) . ' (' . $this->getTotal() . ')]';
     }
 }
