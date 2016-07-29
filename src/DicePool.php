@@ -6,14 +6,24 @@ use DiceBag\Dice\DiceInterface;
 
 class DicePool
 {
-    /** @var DiceInterface[] $pool */
-    private $pool = [];
+    /** @var DiceInterface[] $dice */
+    private $dice = [];
 
     public function __construct(string $diceString)
     {
         $diceFactory = new DiceFactory();
 
-        $this->pool = $diceFactory->makeDice($diceString);
+        $this->dice = $diceFactory->makeDice($diceString);
+    }
+
+    /**
+     * Returns the array of Dice
+     *
+     * @return DiceInterface[];
+     */
+    public function getDice() : array
+    {
+        return $this->dice;
     }
 
     /**
@@ -23,13 +33,13 @@ class DicePool
      */
     public function getTotal() : int
     {
-        return array_reduce($this->pool, function(int $prev, DiceInterface $dice) {
+        return array_reduce($this->dice, function(int $prev, DiceInterface $dice) {
             return $prev + $dice->value();
         }, 0);
     }
 
     public function __toString() : string
     {
-        return '[' . implode(' ', $this->pool) . ' (' . $this->getTotal() . ')]';
+        return '[' . implode(' ', $this->dice) . ' (' . $this->getTotal() . ')]';
     }
 }

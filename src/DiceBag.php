@@ -35,6 +35,16 @@ class DiceBag
     }
 
     /**
+     * Returns the array of DicePools
+     *
+     * @return DicePool[]
+     */
+    public function getDicePools() : array
+    {
+        return $this->dicePools;
+    }
+
+    /**
      * Gets the total value of a DicePool
      *
      * @return int
