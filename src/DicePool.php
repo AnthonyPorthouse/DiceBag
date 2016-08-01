@@ -1,6 +1,7 @@
 <?php
 namespace DiceBag;
 
+use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 use DiceBag\Modifiers\DropHighest;
@@ -36,7 +37,22 @@ class DicePool
 
         $this->originalDice = $factory->makeDice($diceString);
 
-        $this->modifiers = array_map(function (string $modifierClass) {
+        $modifiers = $this->setupModifiers(self::POSSIBLE_MODIFIERS);
+
+        $this->modifiers = array_filter($modifiers);
+
+        $this->dice = $this->applyModifiers($this->originalDice);
+    }
+
+    /**
+     * @param string[] $modifiers An array of modifier class names
+     *
+     * @return Modifier[];
+     */
+    private function setupModifiers(array $modifiers) : array
+    {
+        /** @var Modifier[] $modifiers */
+        $modifiers = array_map(function (string $modifierClass) {
             /** @var Modifier $modifier */
             $modifier = new $modifierClass($this->format);
 
@@ -47,13 +63,24 @@ class DicePool
             if ($modifier->isValid()) {
                 return $modifier;
             }
-        }, self::POSSIBLE_MODIFIERS);
+        }, $modifiers);
 
-        $this->modifiers = array_filter($this->modifiers);
+        return $modifiers;
+    }
 
-        $this->dice = array_reduce($this->modifiers, function (array $dice, Modifier $modifier) {
+    /**
+     * @param DiceInterface[] $dice
+     *
+     * @return DiceInterface[];
+     */
+    private function applyModifiers(array $dice) : array
+    {
+        /** @var DiceInterface[] $dice */
+        $dice = array_reduce($this->modifiers, function (array $dice, Modifier $modifier) : array {
             return $modifier->apply($dice);
-        }, $this->originalDice);
+        }, $dice);
+
+        return $dice;
     }
 
     /**
