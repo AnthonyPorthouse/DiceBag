@@ -26,7 +26,11 @@ class DiceFactory
 
         preg_match(self::DICE_FORMAT, $diceString, $tokens);
 
-        if (!isset($tokens['type'])) {
+        if (!isset($tokens['type']) && !is_numeric($diceString)) {
+            return [];
+        }
+
+        if (!isset($tokens['type']) && is_numeric($diceString)) {
             return $this->makeModifier($diceString);
         }
 
