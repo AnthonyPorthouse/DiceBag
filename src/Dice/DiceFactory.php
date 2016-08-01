@@ -1,9 +1,19 @@
 <?php
 namespace DiceBag\Dice;
 
+use DiceBag\Randomization\Randomization;
+
 class DiceFactory
 {
     const DICE_FORMAT = '/(?<quantity>\d*)(?<type>d|f)(?<size>\d*)/';
+
+    /** @var Randomization $randomizationEngine */
+    private $randomizationEngine;
+
+    public function __construct(Randomization $randomizationEngine)
+    {
+        $this->randomizationEngine = $randomizationEngine;
+    }
 
     /**
      * @param string $diceString
@@ -14,19 +24,19 @@ class DiceFactory
     {
         $tokens = [];
 
-        preg_match(self::DICE_FORMAT, $diceString, $tokens);
+        if (preg_match(self::DICE_FORMAT, $diceString, $tokens)) {
+            if ($tokens['type'] == 'd') {
+                return $this->makeBasicDice($tokens['size'], $tokens['quantity'] ?: 1);
+            }
 
-        if (!isset($tokens['type'])) {
+            return $this->makeFudgeDice($tokens['quantity'] ?: 1);
+        }
+
+        if (is_numeric($diceString)) {
             return $this->makeModifier($diceString);
         }
 
-        if ($tokens['type'] == 'd') {
-            return $this->makeBasicDice($tokens['size'], $tokens['quantity'] ?: 1);
-        }
-
-        if ($tokens['type'] == 'f') {
-            return $this->makeFudgeDice($tokens['quantity'] ?: 1);
-        }
+        return [];
     }
 
     /**
@@ -39,7 +49,7 @@ class DiceFactory
     {
         $pool = [];
         for ($i = 0; $i < $quantity; $i++) {
-            $pool[] = new Dice($size);
+            $pool[] = new Dice($this->randomizationEngine, $size);
         }
         return $pool;
     }
@@ -53,7 +63,7 @@ class DiceFactory
     {
         $pool = [];
         for ($i = 0; $i < $quantity; $i++) {
-            $pool[] = new FudgeDice();
+            $pool[] = new FudgeDice($this->randomizationEngine);
         }
         return $pool;
     }

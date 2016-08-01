@@ -2,6 +2,7 @@
 namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
+use DiceBag\Randomization\MersenneTwister;
 
 class DiceBag
 {
@@ -15,7 +16,7 @@ class DiceBag
      */
     public function __construct(array $diceStrings)
     {
-        $factory = new DiceFactory();
+        $factory = new DiceFactory(new MersenneTwister());
 
         $this->dicePools = array_map(function (string $diceString) use ($factory) {
             return new DicePool($factory, $diceString);

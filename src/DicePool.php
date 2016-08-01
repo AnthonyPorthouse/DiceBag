@@ -1,7 +1,6 @@
 <?php
 namespace DiceBag;
 
-use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 use DiceBag\Modifiers\DropHighest;

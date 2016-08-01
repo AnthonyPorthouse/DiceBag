@@ -1,0 +1,12 @@
+language: php
+php:
+  - '7.0'
+  - 'nightly'
+
+install:
+  - composer install
+
+notifications:
+  email:
+    recipients:
+      - anthony@porthou.se

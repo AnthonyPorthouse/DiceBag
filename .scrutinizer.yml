@@ -1,14 +1,27 @@
 build:
     environment:
         php:
-            version: "7.0.8"
+            version: "7.0.9"
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=coverage.xml'
+                coverage:
+                    file: 'coverage.xml'
+                    format: 'clover'
 
 checks:
     php:
         code_rating: true
         duplication: true
 
+filter:
+    excluded_paths:
+        - "tests/"
+
 tools:
     php_code_sniffer:
         config:
             standard: "PSR2"
+    php_cs_fixer:
+        config: { level: psr2 }
