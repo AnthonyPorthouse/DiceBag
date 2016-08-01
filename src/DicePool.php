@@ -9,11 +9,14 @@ class DicePool
     /** @var DiceInterface[] $dice */
     private $dice = [];
 
-    public function __construct(string $diceString)
-    {
-        $diceFactory = new DiceFactory();
+    /** @var string $format */
+    private $format;
 
-        $this->dice = $diceFactory->makeDice($diceString);
+    public function __construct(DiceFactory $factory, string $diceString)
+    {
+        $this->format = $diceString;
+
+        $this->dice = $factory->makeDice($diceString);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace DiceBag;
 
+use DiceBag\Dice\DiceFactory;
+
 class DiceBag
 {
     /** @var DicePool[] $dicePools */
@@ -13,8 +15,10 @@ class DiceBag
      */
     public function __construct(array $diceStrings)
     {
-        $this->dicePools = array_map(function (string $diceString) {
-            return new DicePool($diceString);
+        $factory = new DiceFactory();
+
+        $this->dicePools = array_map(function (string $diceString) use ($factory) {
+            return new DicePool($factory, $diceString);
         }, $diceStrings);
     }
 
