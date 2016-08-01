@@ -17,7 +17,7 @@ checks:
 
 filter:
     excluded_paths:
-        - "tests"
+        - "tests/"
 
 tools:
     php_code_sniffer:
