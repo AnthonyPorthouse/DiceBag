@@ -2,6 +2,13 @@ build:
     environment:
         php:
             version: "7.0.9"
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=coverage.xml'
+                coverage:
+                    file: 'coverage.xml'
+                    format: 'clover'
 
 checks:
     php:
@@ -10,7 +17,7 @@ checks:
 
 filter:
     excluded_paths:
-        - test/*
+        - "tests"
 
 tools:
     php_code_sniffer:
