@@ -47,7 +47,7 @@ class DicePool
     /**
      * @param string[] $modifiers An array of modifier class names
      *
-     * @return Modifier[];
+     * @return Modifier[]
      */
     private function setupModifiers(array $modifiers) : array
     {
@@ -71,7 +71,7 @@ class DicePool
     /**
      * @param DiceInterface[] $dice
      *
-     * @return DiceInterface[];
+     * @return DiceInterface[]
      */
     private function applyModifiers(array $dice) : array
     {
