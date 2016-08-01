@@ -1,10 +1,14 @@
 <?php
 namespace DiceBag\Dice;
 
+use DiceBag\Randomization\Randomization;
+
 class FudgeDice extends AbstractDice
 {
-    public function __construct()
+    public function __construct(Randomization $randomization)
     {
-        $this->value = mt_rand(-1, 1);
+        parent::__construct($randomization);
+
+        $this->value = $this->randomization->getValue(-1, 1);
     }
 }
