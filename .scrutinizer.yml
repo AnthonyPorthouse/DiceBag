@@ -23,3 +23,5 @@ tools:
     php_code_sniffer:
         config:
             standard: "PSR2"
+    php_cs_fixer:
+        config: { level: psr2 }
