@@ -1,12 +1,16 @@
 build:
     environment:
         php:
-            version: "7.0.8"
+            version: "7.0.9"
 
 checks:
     php:
         code_rating: true
         duplication: true
+
+filter:
+    excluded_paths:
+        - test/*
 
 tools:
     php_code_sniffer:
