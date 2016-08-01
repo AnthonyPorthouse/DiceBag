@@ -5,3 +5,8 @@ php:
 
 install:
   - composer install
+
+notifications:
+  email:
+    recipients:
+      - anthony@porthou.se
