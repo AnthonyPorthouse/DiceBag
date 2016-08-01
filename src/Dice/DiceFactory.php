@@ -24,16 +24,16 @@ class DiceFactory
     {
         $tokens = [];
 
-        preg_match(self::DICE_FORMAT, $diceString, $tokens);
+        if (preg_match(self::DICE_FORMAT, $diceString, $tokens)) {
+            if ($tokens['type'] == 'd') {
+                return $this->makeBasicDice($tokens['size'], $tokens['quantity'] ?: 1);
+            }
 
-        if (!isset($tokens['type']) && !is_numeric($diceString)) {
-            return [];
-        } elseif (!isset($tokens['type']) && is_numeric($diceString)) {
-            return $this->makeModifier($diceString);
-        } elseif ($tokens['type'] == 'd') {
-            return $this->makeBasicDice($tokens['size'], $tokens['quantity'] ?: 1);
-        } elseif ($tokens['type'] == 'f') {
             return $this->makeFudgeDice($tokens['quantity'] ?: 1);
+        }
+
+        if (is_numeric($diceString)) {
+            return $this->makeModifier($diceString);
         }
 
         return [];
