@@ -36,5 +36,4 @@ class DiceFactoryTest extends TestCase
             'empty string' => ['', 0],
         ];
     }
-
 }
