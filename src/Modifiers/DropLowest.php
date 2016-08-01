@@ -5,6 +5,7 @@ class DropLowest extends BaseModifier implements Modifier
 {
     protected $match = '/dl(?<lowest>\d+)/';
 
+    /** {@inheritdoc} */
     public function apply(array $dice) : array
     {
         preg_match($this->getMatch(), $this->format, $matches);

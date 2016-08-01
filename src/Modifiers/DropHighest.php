@@ -5,6 +5,7 @@ class DropHighest extends BaseModifier implements Modifier
 {
     protected $match = '/dh(?<highest>\d+)/';
 
+    /** {@inheritdoc} */
     public function apply(array $dice) : array
     {
         preg_match($this->getMatch(), $this->format, $matches);

@@ -5,6 +5,7 @@ class KeepHighest extends BaseModifier implements Modifier
 {
     protected $match = '/kh(?<highest>\d+)/';
 
+    /** {@inheritdoc} */
     public function apply(array $dice) : array
     {
         preg_match($this->getMatch(), $this->format, $matches);
