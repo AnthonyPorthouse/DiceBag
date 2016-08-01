@@ -1,8 +1,5 @@
 <?php
-
-
 namespace DiceBag\Modifiers;
-
 
 class KeepHighest implements Modifier
 {

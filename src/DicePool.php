@@ -36,7 +36,7 @@ class DicePool
 
         $this->originalDice = $factory->makeDice($diceString);
 
-        $this->modifiers = array_map(function(string $modifierClass) {
+        $this->modifiers = array_map(function (string $modifierClass) {
             /** @var Modifier $modifier */
             $modifier = new $modifierClass($this->format);
             if ($modifier->isValid()) {
@@ -46,7 +46,7 @@ class DicePool
 
         $this->modifiers = array_filter($this->modifiers);
 
-        $this->dice = array_reduce($this->modifiers, function(array $dice, Modifier $modifier) {
+        $this->dice = array_reduce($this->modifiers, function (array $dice, Modifier $modifier) {
             return $modifier->apply($dice);
         }, $this->originalDice);
     }
