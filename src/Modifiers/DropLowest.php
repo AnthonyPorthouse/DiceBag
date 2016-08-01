@@ -1,26 +1,13 @@
 <?php
 namespace DiceBag\Modifiers;
 
-class DropLowest implements Modifier
+class DropLowest extends BaseModifier implements Modifier
 {
-    const MATCH = '/dl(?<lowest>\d+)/';
-
-    /** @var string $format */
-    private $format;
-
-    public function __construct(string $diceString)
-    {
-        $this->format = $diceString;
-    }
-
-    public function isValid() : bool
-    {
-        return preg_match(self::MATCH, $this->format);
-    }
+    protected $match = '/dl(?<lowest>\d+)/';
 
     public function apply(array $dice) : array
     {
-        preg_match(self::MATCH, $this->format, $matches);
+        preg_match($this->getMatch(), $this->format, $matches);
         $lowest = $matches['lowest'];
 
         sort($dice);

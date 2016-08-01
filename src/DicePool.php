@@ -39,6 +39,11 @@ class DicePool
         $this->modifiers = array_map(function (string $modifierClass) {
             /** @var Modifier $modifier */
             $modifier = new $modifierClass($this->format);
+
+            if (!$modifier instanceof Modifier) {
+                return null;
+            }
+
             if ($modifier->isValid()) {
                 return $modifier;
             }
