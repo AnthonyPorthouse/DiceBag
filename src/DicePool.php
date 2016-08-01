@@ -3,20 +3,54 @@ namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
+use DiceBag\Modifiers\DropHighest;
+use DiceBag\Modifiers\DropLowest;
+use DiceBag\Modifiers\KeepHighest;
+use DiceBag\Modifiers\KeepLowest;
+use DiceBag\Modifiers\Modifier;
 
 class DicePool
 {
     /** @var DiceInterface[] $dice */
     private $dice = [];
 
+    /** @var DiceInterface[] $originalDice */
+    private $originalDice = [];
+
     /** @var string $format */
     private $format;
+
+    /** @var Modifier[] $modifiers */
+    private $modifiers;
+
+    const POSSIBLE_MODIFIERS = [
+        KeepHighest::class,
+        KeepLowest::class,
+        DropHighest::class,
+        DropLowest::class,
+    ];
 
     public function __construct(DiceFactory $factory, string $diceString)
     {
         $this->format = $diceString;
 
-        $this->dice = $factory->makeDice($diceString);
+        $this->originalDice = $factory->makeDice($diceString);
+
+        $this->modifiers = array_map(function(string $modifierClass) : ?Modifier {
+            /** @var Modifier $modifier */
+            $modifier = new $modifierClass($this->format);
+            if ($modifier->isValid()) {
+                return $modifier;
+            }
+
+            return null;
+        }, self::POSSIBLE_MODIFIERS);
+
+        $this->modifiers = array_filter($this->modifiers);
+
+        $this->dice = array_reduce($this->modifiers, function(array $dice, Modifier $modifier) {
+            return $modifier->apply($dice);
+        }, $this->originalDice);
     }
 
     /**
