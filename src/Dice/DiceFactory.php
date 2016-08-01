@@ -28,19 +28,15 @@ class DiceFactory
 
         if (!isset($tokens['type']) && !is_numeric($diceString)) {
             return [];
-        }
-
-        if (!isset($tokens['type']) && is_numeric($diceString)) {
+        } elseif (!isset($tokens['type']) && is_numeric($diceString)) {
             return $this->makeModifier($diceString);
-        }
-
-        if ($tokens['type'] == 'd') {
+        } elseif ($tokens['type'] == 'd') {
             return $this->makeBasicDice($tokens['size'], $tokens['quantity'] ?: 1);
-        }
-
-        if ($tokens['type'] == 'f') {
+        } elseif ($tokens['type'] == 'f') {
             return $this->makeFudgeDice($tokens['quantity'] ?: 1);
         }
+
+        return [];
     }
 
     /**

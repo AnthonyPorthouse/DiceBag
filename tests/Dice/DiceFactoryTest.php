@@ -18,6 +18,9 @@ class DiceFactoryTest extends TestCase
 
     /**
      * @dataProvider diceProvider
+     *
+     * @param string $format The dice string to test
+     * @param int $amount The amount of dice that should be created
      */
     public function testShouldReturnArrayOfDice($format, $amount)
     {
