@@ -8,5 +8,4 @@ class MersenneTwister implements Randomization
     {
         return mt_rand($min, $max);
     }
-
 }
