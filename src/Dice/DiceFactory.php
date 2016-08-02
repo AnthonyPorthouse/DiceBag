@@ -1,14 +1,14 @@
 <?php
 namespace DiceBag\Dice;
 
-use DiceBag\Randomization\Randomization;
+use DiceBag\Randomization\RandomizationEngine;
 
 class DiceFactory
 {
-    /** @var Randomization $randomizationEngine */
+    /** @var RandomizationEngine $randomizationEngine */
     private $randomizationEngine;
 
-    public function __construct(Randomization $randomizationEngine)
+    public function __construct(RandomizationEngine $randomizationEngine)
     {
         $this->randomizationEngine = $randomizationEngine;
     }

@@ -1,20 +1,20 @@
 <?php
 namespace DiceBag\Dice;
 
-use DiceBag\Randomization\Randomization;
+use DiceBag\Randomization\RandomizationEngine;
 
 class Modifier extends AbstractDice implements DiceInterface
 {
     const FORMAT = '/^(?<value>\d+)$/';
 
-    public function __construct(Randomization $randomization, string $modifier)
+    public function __construct(RandomizationEngine $randomization, string $modifier)
     {
         parent::__construct($randomization);
 
         $this->value = (int) $modifier;
     }
 
-    public static function make(Randomization $randomization, string $diceString) : array
+    public static function make(RandomizationEngine $randomization, string $diceString) : array
     {
         preg_match(static::FORMAT, $diceString, $tokens);
 

@@ -1,7 +1,7 @@
 <?php
 namespace DiceBag\Dice;
 
-use DiceBag\Randomization\Randomization;
+use DiceBag\Randomization\RandomizationEngine;
 
 class Dice extends AbstractDice
 {
@@ -10,17 +10,17 @@ class Dice extends AbstractDice
     /**
      * Dice constructor.
      *
-     * @param Randomization $randomization
+     * @param RandomizationEngine $randomization
      * @param int $size
      */
-    public function __construct(Randomization $randomization, int $size)
+    public function __construct(RandomizationEngine $randomization, int $size)
     {
         parent::__construct($randomization);
 
         $this->value = $this->randomization->getValue(1, $size);
     }
 
-    public static function make(Randomization $randomization, string $diceString) : array
+    public static function make(RandomizationEngine $randomization, string $diceString) : array
     {
         preg_match(static::FORMAT, $diceString, $tokens);
 

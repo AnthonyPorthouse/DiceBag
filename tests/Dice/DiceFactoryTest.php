@@ -1,8 +1,11 @@
 <?php
 namespace Dice;
 
+use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
+use DiceBag\Dice\FudgeDice;
+use DiceBag\Dice\Modifier;
 use DiceBag\Randomization\MersenneTwister;
 use PHPUnit\Framework\TestCase;
 

@@ -1,7 +1,7 @@
 <?php
 namespace DiceBag\Dice;
 
-use DiceBag\Randomization\Randomization;
+use DiceBag\Randomization\RandomizationEngine;
 
 interface DiceInterface
 {
@@ -10,10 +10,10 @@ interface DiceInterface
     public static function isValid(string $diceString) : bool;
 
     /**
-     * @param Randomization $randomization
+     * @param RandomizationEngine $randomization
      * @param string $diceString
      *
      * @return DiceInterface[]
      */
-    public static function make(Randomization $randomization, string $diceString) : array;
+    public static function make(RandomizationEngine $randomization, string $diceString) : array;
 }

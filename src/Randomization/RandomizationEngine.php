@@ -1,7 +1,7 @@
 <?php
 namespace DiceBag\Randomization;
 
-interface Randomization
+interface RandomizationEngine
 {
     /**
      * Returns an integer value between the two given values, inclusively
