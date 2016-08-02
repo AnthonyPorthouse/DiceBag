@@ -1,16 +1,14 @@
 <?php
 namespace DiceBag\Dice;
 
-use DiceBag\Randomization\Randomization;
+use DiceBag\Randomization\RandomizationEngine;
 
 class DiceFactory
 {
-    const DICE_FORMAT = '/(?<quantity>\d*)(?<type>d|f)(?<size>\d*)/';
-
-    /** @var Randomization $randomizationEngine */
+    /** @var RandomizationEngine $randomizationEngine */
     private $randomizationEngine;
 
-    public function __construct(Randomization $randomizationEngine)
+    public function __construct(RandomizationEngine $randomizationEngine)
     {
         $this->randomizationEngine = $randomizationEngine;
     }

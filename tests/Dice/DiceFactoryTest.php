@@ -1,8 +1,11 @@
 <?php
 namespace Dice;
 
+use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
+use DiceBag\Dice\FudgeDice;
+use DiceBag\Dice\Modifier;
 use DiceBag\Randomization\MersenneTwister;
 use PHPUnit\Framework\TestCase;
 
@@ -34,6 +37,7 @@ class DiceFactoryTest extends TestCase
         return [
             'd6' => ['d6', 1],
             '2d6' => ['2d6', 2],
+            'f' => ['f', 1],
             '2f' => ['2f', 2],
             '2' => ['2', 1],
             'empty string' => ['', 0],

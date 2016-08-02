@@ -1,7 +1,7 @@
 <?php
 namespace DiceBag\Dice;
 
-use DiceBag\Randomization\Randomization;
+use DiceBag\Randomization\RandomizationEngine;
 
 abstract class AbstractDice implements DiceInterface
 {
@@ -10,10 +10,10 @@ abstract class AbstractDice implements DiceInterface
     /** @var int $value */
     protected $value;
 
-    /** @var Randomization $randomization */
+    /** @var RandomizationEngine $randomization */
     protected $randomization;
 
-    public function __construct(Randomization $randomization)
+    public function __construct(RandomizationEngine $randomization)
     {
         $this->randomization = $randomization;
     }
