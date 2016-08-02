@@ -1,7 +1,6 @@
 <?php
 namespace Dice;
 
-use DiceBag\Dice\Dice;
 use DiceBag\Dice\Modifier;
 use DiceBag\Randomization\Randomization;
 use PHPUnit\Framework\TestCase;
@@ -58,8 +57,8 @@ class ModifierTest extends TestCase
         $randomized = $randomizationDummy->reveal();
 
         // Min Value
-        $randomizationDummy->getValue(1, 6)->willReturn(1);
-        $dice = new Dice($randomized, 6);
-        $this->assertEquals('[1]', $dice->__toString());
+        $randomizationDummy->getValue()->shouldNotBeCalled();
+        $dice = new Modifier($randomized, '1');
+        $this->assertEquals('1', $dice->__toString());
     }
 }
