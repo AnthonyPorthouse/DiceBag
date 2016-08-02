@@ -5,7 +5,7 @@ use DiceBag\Randomization\Randomization;
 
 class FudgeDice extends AbstractDice
 {
-    const FORMAT = '/(?<quantity>\d*)f/';
+    const FORMAT = '/^(?<quantity>\d*)f/';
 
     public function __construct(Randomization $randomization)
     {

@@ -2,6 +2,7 @@
 namespace Dice;
 
 use DiceBag\Dice\FudgeDice;
+use DiceBag\Randomization\Randomization;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophet;
 
@@ -22,17 +23,48 @@ class FudgeDiceTest extends TestCase
 
     public function testGetDiceValue()
     {
-        $randomizationDummy = $this->prophet->prophesize(\DiceBag\Randomization\Randomization::class);
-        $randomized = $randomizationDummy->reveal();
+        $prophecy = $this->prophet->prophesize(Randomization::class);
+        $randomizationEngine = $prophecy->reveal();
 
         // Min Value
-        $randomizationDummy->getValue(-1, 1)->willReturn(-1);
-        $dice = new FudgeDice($randomized);
+        $prophecy->getValue(-1, 1)->willReturn(-1);
+        $dice = new FudgeDice($randomizationEngine);
         $this->assertEquals(-1, $dice->value());
 
         // Max Value
-        $randomizationDummy->getValue(-1, 1)->willReturn(1);
-        $dice = new FudgeDice($randomized);
+        $prophecy->getValue(-1, 1)->willReturn(1);
+        $dice = new FudgeDice($randomizationEngine);
         $this->assertEquals(1, $dice->value());
+    }
+
+    /**
+     * @dataProvider diceFormatProvider
+     */
+    public function testIsValid(string $diceString, bool $valid)
+    {
+        $this->assertEquals($valid, FudgeDice::isValid($diceString));
+    }
+
+    public function diceFormatProvider()
+    {
+        return [
+            ['d6', false],
+            ['2d6', false],
+            ['f', true],
+            ['2f', true],
+            ['1', false],
+            ['', false],
+        ];
+    }
+
+    public function testToString()
+    {
+        $prophecy = $this->prophet->prophesize(Randomization::class);
+        $randomizationEngine = $prophecy->reveal();
+
+        // Min Value
+        $prophecy->getValue(-1, 1)->willReturn(1);
+        $dice = new FudgeDice($randomizationEngine);
+        $this->assertEquals('[1]', $dice->__toString());
     }
 }

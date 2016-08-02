@@ -34,6 +34,7 @@ class DiceFactoryTest extends TestCase
         return [
             'd6' => ['d6', 1],
             '2d6' => ['2d6', 2],
+            'f' => ['f', 1],
             '2f' => ['2f', 2],
             '2' => ['2', 1],
             'empty string' => ['', 0],

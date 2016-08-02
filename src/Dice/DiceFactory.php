@@ -5,8 +5,6 @@ use DiceBag\Randomization\Randomization;
 
 class DiceFactory
 {
-    const DICE_FORMAT = '/(?<quantity>\d*)(?<type>d|f)(?<size>\d*)/';
-
     /** @var Randomization $randomizationEngine */
     private $randomizationEngine;
 

@@ -5,7 +5,7 @@ use DiceBag\Randomization\Randomization;
 
 class Dice extends AbstractDice
 {
-    const FORMAT = '/(?<quantity>\d*)d(?<size>\d+)/';
+    const FORMAT = '/^(?<quantity>\d*)d(?<size>\d+)/';
 
     /**
      * Dice constructor.

@@ -2,11 +2,12 @@
 namespace Dice;
 
 use DiceBag\Dice\Dice;
+use DiceBag\Dice\Modifier;
 use DiceBag\Randomization\Randomization;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophet;
 
-class DiceTest extends TestCase
+class ModifierTest extends TestCase
 {
     /** @var  Prophet */
     private $prophet;
@@ -21,19 +22,13 @@ class DiceTest extends TestCase
         $this->prophet->checkPredictions();
     }
 
-    public function testGetDiceValue()
+    public function testGetModifierValue()
     {
         $randomizationDummy = $this->prophet->prophesize(Randomization::class);
         $randomized = $randomizationDummy->reveal();
 
-        // Min Value
-        $randomizationDummy->getValue(1, 6)->willReturn(1);
-        $dice = new Dice($randomized, 6);
-        $this->assertEquals(1, $dice->value());
-
-        // Max Value
-        $randomizationDummy->getValue(1, 6)->willReturn(6);
-        $dice = new Dice($randomized, 6);
+        $randomizationDummy->getValue()->shouldNotBeCalled();
+        $dice = new Modifier($randomized, 6);
         $this->assertEquals(6, $dice->value());
     }
 
@@ -42,7 +37,19 @@ class DiceTest extends TestCase
      */
     public function testIsValid(string $diceString, bool $valid)
     {
-        $this->assertEquals($valid, Dice::isValid($diceString));
+        $this->assertEquals($valid, Modifier::isValid($diceString));
+    }
+
+    public function diceFormatProvider()
+    {
+        return [
+            ['d6', false],
+            ['2d6', false],
+            ['f', false],
+            ['2f', false],
+            ['1', true],
+            ['', false],
+        ];
     }
 
     public function testToString()
@@ -54,17 +61,5 @@ class DiceTest extends TestCase
         $randomizationDummy->getValue(1, 6)->willReturn(1);
         $dice = new Dice($randomized, 6);
         $this->assertEquals('[1]', $dice->__toString());
-    }
-
-    public function diceFormatProvider()
-    {
-        return [
-            ['d6', true],
-            ['2d6', true],
-            ['f', false],
-            ['2f', false],
-            ['1', false],
-            ['', false],
-        ];
     }
 }
