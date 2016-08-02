@@ -20,9 +20,6 @@ class DicePool
     /** @var string $format */
     private $format;
 
-    /** @var Modifier[] $modifiers */
-    private $modifiers;
-
     const POSSIBLE_MODIFIERS = [
         KeepHighest::class,
         KeepLowest::class,
@@ -33,27 +30,24 @@ class DicePool
     public function __construct(DiceFactory $factory, string $diceString)
     {
         $this->format = $diceString;
-
         $this->originalDice = $factory->makeDice($diceString);
 
-        $modifiers = $this->setupModifiers(self::POSSIBLE_MODIFIERS);
-
-        $this->modifiers = array_filter($modifiers);
-
-        $this->dice = $this->applyModifiers($this->originalDice);
+        $modifiers = $this->setupModifiers(self::POSSIBLE_MODIFIERS, $diceString);
+        $modifiers = array_filter($modifiers);
+        $this->dice = $this->applyModifiers($this->originalDice, $modifiers);
     }
 
     /**
      * @param string[] $modifiers An array of modifier class names
+     * @param string $diceString The Dice String we're configuring the filers for
      *
      * @return Modifier[]
      */
-    private function setupModifiers(array $modifiers) : array
+    private function setupModifiers(array $modifiers, string $diceString) : array
     {
-        /** @var Modifier[] $modifiers */
-        $modifiers = array_map(function (string $modifierClass) {
+        return array_map(function (string $modifierClass) use ($diceString) {
             /** @var Modifier $modifier */
-            $modifier = new $modifierClass($this->format);
+            $modifier = new $modifierClass($diceString);
 
             if (!$modifier instanceof Modifier) {
                 return null;
@@ -63,19 +57,18 @@ class DicePool
                 return $modifier;
             }
         }, $modifiers);
-
-        return $modifiers;
     }
 
     /**
      * @param DiceInterface[] $dice
+     * @param Modifier[] $modifiers
      *
      * @return DiceInterface[]
      */
-    private function applyModifiers(array $dice) : array
+    private function applyModifiers(array $dice, array $modifiers) : array
     {
         /** @var DiceInterface[] $dice */
-        $dice = array_reduce($this->modifiers, function (array $dice, Modifier $modifier) : array {
+        $dice = array_reduce($modifiers, function (array $dice, Modifier $modifier) : array {
             return $modifier->apply($dice);
         }, $dice);
 
