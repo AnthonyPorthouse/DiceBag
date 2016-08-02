@@ -5,6 +5,8 @@ use DiceBag\Randomization\Randomization;
 
 abstract class AbstractDice implements DiceInterface
 {
+    const FORMAT = '//';
+
     /** @var int $value */
     protected $value;
 
@@ -19,6 +21,16 @@ abstract class AbstractDice implements DiceInterface
     public function value() : int
     {
         return $this->value;
+    }
+
+    /**
+     * @param string $diceString
+     *
+     * @return bool
+     */
+    public static function isValid(string $diceString) : bool
+    {
+        return preg_match(static::FORMAT, $diceString);
     }
 
     public function __toString()
