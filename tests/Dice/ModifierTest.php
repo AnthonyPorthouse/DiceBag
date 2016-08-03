@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class ModifierTest extends TestCase
 {
-
     public function testGetModifierValue()
     {
         $randomizationDummy = $this->prophesize(RandomizationEngine::class);

@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class DiceTest extends TestCase
 {
-
     public function testGetDiceValue()
     {
         $randomizationDummy = $this->prophesize(RandomizationEngine::class);

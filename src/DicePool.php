@@ -47,7 +47,7 @@ class DicePool
     {
         return array_map(function (string $modifierClass) use ($diceString) {
             /** @var Modifier $modifierClass */
-            if($modifierClass::isValid($diceString)) {
+            if ($modifierClass::isValid($diceString)) {
                 return new $modifierClass($diceString);
             }
         }, $modifiers);

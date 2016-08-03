@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class FudgeDiceTest extends TestCase
 {
-
     public function testGetDiceValue()
     {
         $prophecy = $this->prophesize(RandomizationEngine::class);
