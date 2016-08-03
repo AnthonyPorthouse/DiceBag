@@ -98,7 +98,7 @@ class DicePool
             return strcmp(spl_object_hash($a), spl_object_hash($b));
         });
 
-        $droppedDiceString = array_reduce ($droppedDice, function(string $output, DiceInterface $dice) {
+        $droppedDiceString = array_reduce($droppedDice, function (string $output, DiceInterface $dice) {
             return $output .= ' [' . $dice->value() . "\u{0336}]";
         }, '');
 
