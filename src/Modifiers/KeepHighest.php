@@ -3,12 +3,12 @@ namespace DiceBag\Modifiers;
 
 class KeepHighest extends BaseModifier implements Modifier
 {
-    protected $match = '/kh(?<highest>\d+)/';
+    const MATCH = '/kh(?<highest>\d+)/';
 
     /** {@inheritdoc} */
     public function apply(array $dice) : array
     {
-        preg_match($this->getMatch(), $this->format, $matches);
+        preg_match(static::MATCH, $this->format, $matches);
         $highest = $matches['highest'];
 
         sort($dice);

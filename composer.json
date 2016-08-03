@@ -20,6 +20,11 @@
             "DiceBag\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "DiceBag\\": "tests/"
+        }
+    },
     "require": {
         "php": ">= 7",
         "symfony/console": "^3.1"

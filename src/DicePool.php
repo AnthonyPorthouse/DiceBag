@@ -46,15 +46,9 @@ class DicePool
     private function setupModifiers(array $modifiers, string $diceString) : array
     {
         return array_map(function (string $modifierClass) use ($diceString) {
-            /** @var Modifier $modifier */
-            $modifier = new $modifierClass($diceString);
-
-            if (!$modifier instanceof Modifier) {
-                return null;
-            }
-
-            if ($modifier->isValid()) {
-                return $modifier;
+            /** @var Modifier $modifierClass */
+            if ($modifierClass::isValid($diceString)) {
+                return new $modifierClass($diceString);
             }
         }, $modifiers);
     }

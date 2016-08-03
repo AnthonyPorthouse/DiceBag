@@ -3,12 +3,12 @@ namespace DiceBag\Modifiers;
 
 class DropHighest extends BaseModifier implements Modifier
 {
-    protected $match = '/dh(?<highest>\d+)/';
+    const MATCH = '/dh(?<highest>\d+)/';
 
     /** {@inheritdoc} */
     public function apply(array $dice) : array
     {
-        preg_match($this->getMatch(), $this->format, $matches);
+        preg_match(static::MATCH, $this->format, $matches);
         $highest = $matches['highest'];
 
         sort($dice);

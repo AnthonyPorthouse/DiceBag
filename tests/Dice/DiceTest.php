@@ -1,29 +1,14 @@
 <?php
-namespace Dice;
+namespace DiceBag\Dice;
 
-use DiceBag\Dice\Dice;
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophet;
 
 class DiceTest extends TestCase
 {
-    /** @var  Prophet */
-    private $prophet;
-
-    protected function setUp()
-    {
-        $this->prophet = new Prophet();
-    }
-
-    protected function tearDown()
-    {
-        $this->prophet->checkPredictions();
-    }
-
     public function testGetDiceValue()
     {
-        $randomizationDummy = $this->prophet->prophesize(RandomizationEngine::class);
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
         $randomized = $randomizationDummy->reveal();
 
         // Min Value
@@ -39,6 +24,9 @@ class DiceTest extends TestCase
 
     /**
      * @dataProvider diceFormatProvider
+     *
+     * @param string $diceString
+     * @param bool $valid
      */
     public function testIsValid(string $diceString, bool $valid)
     {
@@ -47,7 +35,7 @@ class DiceTest extends TestCase
 
     public function testToString()
     {
-        $randomizationDummy = $this->prophet->prophesize(RandomizationEngine::class);
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
         $randomized = $randomizationDummy->reveal();
 
         // Min Value

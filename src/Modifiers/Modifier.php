@@ -6,9 +6,11 @@ use DiceBag\Dice\DiceInterface;
 interface Modifier
 {
     /**
+     * @param string $diceFormat The dice format to check if is valid for this modifier
+     *
      * @return bool
      */
-    public function isValid() : bool;
+    public static function isValid(string $diceFormat) : bool;
 
     /**
      * @param DiceInterface[] $dice
