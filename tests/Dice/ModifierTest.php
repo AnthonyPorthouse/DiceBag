@@ -1,29 +1,15 @@
 <?php
-namespace Dice;
+namespace DiceBag\Dice;
 
-use DiceBag\Dice\Modifier;
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophet;
 
 class ModifierTest extends TestCase
 {
-    /** @var  Prophet */
-    private $prophet;
-
-    protected function setUp()
-    {
-        $this->prophet = new Prophet();
-    }
-
-    protected function tearDown()
-    {
-        $this->prophet->checkPredictions();
-    }
 
     public function testGetModifierValue()
     {
-        $randomizationDummy = $this->prophet->prophesize(RandomizationEngine::class);
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
         $randomized = $randomizationDummy->reveal();
 
         $randomizationDummy->getValue()->shouldNotBeCalled();
@@ -53,7 +39,7 @@ class ModifierTest extends TestCase
 
     public function testToString()
     {
-        $randomizationDummy = $this->prophet->prophesize(RandomizationEngine::class);
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
         $randomized = $randomizationDummy->reveal();
 
         // Min Value

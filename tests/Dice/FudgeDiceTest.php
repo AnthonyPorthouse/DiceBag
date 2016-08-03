@@ -1,29 +1,15 @@
 <?php
-namespace Dice;
+namespace DiceBag\Dice;
 
-use DiceBag\Dice\FudgeDice;
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophet;
 
 class FudgeDiceTest extends TestCase
 {
-    /** @var  Prophet */
-    private $prophet;
-
-    protected function setUp()
-    {
-        $this->prophet = new Prophet();
-    }
-
-    protected function tearDown()
-    {
-        $this->prophet->checkPredictions();
-    }
 
     public function testGetDiceValue()
     {
-        $prophecy = $this->prophet->prophesize(RandomizationEngine::class);
+        $prophecy = $this->prophesize(RandomizationEngine::class);
         $randomizationEngine = $prophecy->reveal();
 
         // Min Value
@@ -59,7 +45,7 @@ class FudgeDiceTest extends TestCase
 
     public function testToString()
     {
-        $prophecy = $this->prophet->prophesize(RandomizationEngine::class);
+        $prophecy = $this->prophesize(RandomizationEngine::class);
         $randomizationEngine = $prophecy->reveal();
 
         // Min Value

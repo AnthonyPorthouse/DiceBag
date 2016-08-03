@@ -1,5 +1,5 @@
 <?php
-namespace Dice;
+namespace DiceBag\Dice;
 
 use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
