@@ -1,6 +1,7 @@
 <?php
 namespace DiceBag;
 
+use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 use DiceBag\Modifiers\DropHighest;
@@ -93,6 +94,14 @@ class DicePool
 
     public function __toString() : string
     {
-        return '[' . implode(' ', $this->dice) . ' (' . $this->getTotal() . ')]';
+        $droppedDice = array_udiff($this->originalDice, $this->dice, function(DiceInterface $a, DiceInterface $b) {
+            return strcmp(spl_object_hash($a), spl_object_hash($b));
+        });
+
+        $droppedDiceString = array_reduce($droppedDice, function(string $output, DiceInterface $dice) {
+            return $output .= ' [' . $dice->value() . "\u{0336}]";
+        }, '');
+
+        return '[' . implode(' ', $this->dice) . $droppedDiceString . ' (' . $this->getTotal() . ')]';
     }
 }
