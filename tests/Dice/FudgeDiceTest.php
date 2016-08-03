@@ -24,6 +24,9 @@ class FudgeDiceTest extends TestCase
 
     /**
      * @dataProvider diceFormatProvider
+     *
+     * @param string $diceString
+     * @param bool $valid
      */
     public function testIsValid(string $diceString, bool $valid)
     {

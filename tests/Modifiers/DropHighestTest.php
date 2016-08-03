@@ -1,6 +1,7 @@
 <?php
 namespace DiceBag\Modifiers;
 
+use DiceBag\Dice\DiceInterface;
 use DiceBag\Dice\Modifier as DiceModifier;
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
@@ -31,9 +32,14 @@ class DropHighestTest extends TestCase
             new DiceModifier($randomizer, 4),
         ];
 
+        /** @var DiceInterface[] $remainingDice */
         $remainingDice = $modifier->apply($dice);
 
         $this->assertCount(3, $remainingDice);
+
+        foreach ($remainingDice as $dice) {
+            $this->assertNotEquals(4, $dice->value());
+        }
     }
 
     public function modifierProvider()
