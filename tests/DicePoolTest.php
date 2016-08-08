@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class DicePoolTest extends TestCase
 {
-
     public function testNewDicePool()
     {
         $prophet = $this->prophesize(RandomizationEngine::class);
