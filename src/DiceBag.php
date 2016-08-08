@@ -3,6 +3,7 @@ namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Randomization\MersenneTwister;
+use DiceBag\Randomization\RandomizationEngine;
 
 class DiceBag implements \JsonSerializable
 {
@@ -13,10 +14,13 @@ class DiceBag implements \JsonSerializable
      * DiceBag constructor.
      *
      * @param array $diceStrings
+     * @param RandomizationEngine $randomizationEngine
      */
-    public function __construct(array $diceStrings)
+    public function __construct(array $diceStrings, RandomizationEngine $randomizationEngine = null)
     {
-        $factory = new DiceFactory(new MersenneTwister());
+        $randomizationEngine = $randomizationEngine ?? new MersenneTwister();
+
+        $factory = new DiceFactory($randomizationEngine);
 
         $this->dicePools = array_map(function (string $diceString) use ($factory) {
             return new DicePool($factory, $diceString);
@@ -27,16 +31,19 @@ class DiceBag implements \JsonSerializable
      * Creates a new instance of the DiceBag from a passed dice string.
      *
      * @param string $diceString The dice string to create the DiceBag for
+     * @param RandomizationEngine $randomizationEngine
      *
      * @return DiceBag
      */
-    public static function factory(string $diceString) : DiceBag
+    public static function factory(string $diceString, RandomizationEngine $randomizationEngine = null) : DiceBag
     {
+        $randomizationEngine = $randomizationEngine ?? new MersenneTwister();
+
         $diceString = strtolower($diceString);
 
         $diceStrings = explode('+', $diceString);
 
-        return new DiceBag($diceStrings);
+        return new DiceBag($diceStrings, $randomizationEngine);
     }
 
     /**
