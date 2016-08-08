@@ -45,6 +45,23 @@ class FudgeDiceTest extends TestCase
         ];
     }
 
+    public function testJson()
+    {
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
+        $randomizationDummy->getValue(-1, 1)->willReturn(1);
+        $randomizationEngine = $randomizationDummy->reveal();
+
+        $dice = new FudgeDice($randomizationEngine);
+
+        $expected = json_encode([
+            'min' => -1,
+            'max' => 1,
+            'result' => 1,
+        ]);
+
+        $this->assertJsonStringEqualsJsonString($expected, json_encode($dice));
+    }
+
     public function testToString()
     {
         $prophecy = $this->prophesize(RandomizationEngine::class);
