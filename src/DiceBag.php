@@ -4,7 +4,7 @@ namespace DiceBag;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Randomization\MersenneTwister;
 
-class DiceBag
+class DiceBag implements \JsonSerializable
 {
     /** @var DicePool[] $dicePools */
     private $dicePools = [];
@@ -59,6 +59,14 @@ class DiceBag
         return array_reduce($this->dicePools, function (int $prev, DicePool $pool) {
             return $prev + $pool->getTotal();
         }, 0);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'pools' => $this->getDicePools(),
+            'total' => $this->getTotal(),
+        ];
     }
 
     public function __toString() : string

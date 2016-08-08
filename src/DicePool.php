@@ -10,7 +10,7 @@ use DiceBag\Modifiers\KeepHighest;
 use DiceBag\Modifiers\KeepLowest;
 use DiceBag\Modifiers\Modifier;
 
-class DicePool
+class DicePool implements \JsonSerializable
 {
     /** @var DiceInterface[] $dice */
     private $dice = [];
@@ -81,6 +81,18 @@ class DicePool
     }
 
     /**
+     * The Dice that were dropped.
+     *
+     * @return DiceInterface[]
+     */
+    public function getDroppedDice() : array
+    {
+        return array_udiff($this->originalDice, $this->dice, function (DiceInterface $a, DiceInterface $b) {
+            return strcmp(spl_object_hash($a), spl_object_hash($b));
+        });
+    }
+
+    /**
      * Gets the total result of the DicePool
      *
      * @return int
@@ -90,6 +102,15 @@ class DicePool
         return array_reduce($this->dice, function (int $prev, DiceInterface $dice) {
             return $prev + $dice->value();
         }, 0);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'dice' => $this->getDice(),
+            'dropped' => $this->getDroppedDice(),
+            'total' => $this->getTotal(),
+        ];
     }
 
     public function __toString() : string

@@ -3,7 +3,7 @@ namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
 
-abstract class AbstractDice implements DiceInterface
+abstract class AbstractDice implements DiceInterface, \JsonSerializable
 {
     const FORMAT = '//';
 
@@ -31,6 +31,11 @@ abstract class AbstractDice implements DiceInterface
     public static function isValid(string $diceString) : bool
     {
         return preg_match(static::FORMAT, $diceString);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->value();
     }
 
     public function __toString()
