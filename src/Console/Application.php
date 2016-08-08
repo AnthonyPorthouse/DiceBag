@@ -15,7 +15,5 @@ class Application extends \Symfony\Component\Console\Application
         $this->addCommands([
             new RollCommand(),
         ]);
-
-        $this->run();
     }
 }
