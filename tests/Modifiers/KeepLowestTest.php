@@ -1,6 +1,7 @@
 <?php
 namespace DiceBag\Modifiers;
 
+use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 use DiceBag\Dice\Modifier as DiceModifier;
 use DiceBag\Randomization\RandomizationEngine;
@@ -22,18 +23,15 @@ class KeepLowestTest extends TestCase
     public function testApply()
     {
         $prophet = $this->prophesize(RandomizationEngine::class);
+        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
         $randomizer = $prophet->reveal();
+        $factory = new DiceFactory($randomizer);
 
         $modifier = new KeepLowest('4d6kl1');
-        $dice = [
-            new DiceModifier($randomizer, 1),
-            new DiceModifier($randomizer, 2),
-            new DiceModifier($randomizer, 3),
-            new DiceModifier($randomizer, 4),
-        ];
+        $dice = $factory->makeDice('4d6kl1');
 
         /** @var DiceInterface[] $remainingDice */
-        $remainingDice = $modifier->apply($dice);
+        $remainingDice = $modifier->apply($dice, $factory);
 
         $this->assertCount(1, $remainingDice);
 

@@ -11,6 +11,9 @@ class Modifier extends AbstractDice implements DiceInterface
     {
         parent::__construct($randomization);
 
+        $this->min = (int) $modifier;
+        $this->max = (int) $modifier;
+
         $this->value = (int) $modifier;
     }
 

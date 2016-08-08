@@ -6,6 +6,7 @@ use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 use DiceBag\Modifiers\DropHighest;
 use DiceBag\Modifiers\DropLowest;
+use DiceBag\Modifiers\Exploding;
 use DiceBag\Modifiers\KeepHighest;
 use DiceBag\Modifiers\KeepLowest;
 use DiceBag\Modifiers\Modifier;
@@ -21,7 +22,10 @@ class DicePool implements \JsonSerializable
     /** @var string $format */
     private $format;
 
+    private $parsed = [];
+
     const POSSIBLE_MODIFIERS = [
+        Exploding::class,
         KeepHighest::class,
         KeepLowest::class,
         DropHighest::class,
@@ -35,7 +39,7 @@ class DicePool implements \JsonSerializable
 
         $modifiers = $this->setupModifiers(self::POSSIBLE_MODIFIERS, $diceString);
         $modifiers = array_filter($modifiers);
-        $this->dice = $this->applyModifiers($this->originalDice, $modifiers);
+        $this->dice = $this->applyModifiers($this->originalDice, $factory, $modifiers);
     }
 
     /**
@@ -56,15 +60,16 @@ class DicePool implements \JsonSerializable
 
     /**
      * @param DiceInterface[] $dice
+     * @param DiceFactory $diceFactory
      * @param Modifier[] $modifiers
      *
      * @return DiceInterface[]
      */
-    private function applyModifiers(array $dice, array $modifiers) : array
+    private function applyModifiers(array $dice, DiceFactory $diceFactory, array $modifiers) : array
     {
         /** @var DiceInterface[] $dice */
-        $dice = array_reduce($modifiers, function (array $dice, Modifier $modifier) : array {
-            return $modifier->apply($dice);
+        $dice = array_reduce($modifiers, function (array $dice, Modifier $modifier) use ($diceFactory) : array {
+            return $modifier->apply($dice, $diceFactory);
         }, $dice);
 
         return $dice;

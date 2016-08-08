@@ -11,7 +11,10 @@ class FudgeDice extends AbstractDice
     {
         parent::__construct($randomization);
 
-        $this->value = $this->randomization->getValue(-1, 1);
+        $this->min = -1;
+        $this->max = 1;
+
+        $this->value = $this->randomization->getValue($this->min, $this->max);
     }
 
     public static function make(RandomizationEngine $randomization, string $diceString) : array

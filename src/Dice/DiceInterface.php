@@ -5,6 +5,9 @@ use DiceBag\Randomization\RandomizationEngine;
 
 interface DiceInterface
 {
+    public function min() : int;
+    public function max() : int;
+
     public function value() : int;
 
     public static function isValid(string $diceString) : bool;

@@ -7,6 +7,11 @@ abstract class AbstractDice implements DiceInterface, \JsonSerializable
 {
     const FORMAT = '//';
 
+    /** @var int $min */
+    protected $min;
+    /** @var int $max */
+    protected $max;
+
     /** @var int $value */
     protected $value;
 
@@ -16,6 +21,16 @@ abstract class AbstractDice implements DiceInterface, \JsonSerializable
     public function __construct(RandomizationEngine $randomization)
     {
         $this->randomization = $randomization;
+    }
+
+    public function min() : int
+    {
+        return $this->min;
+    }
+
+    public function max() : int
+    {
+        return $this->max;
     }
 
     public function value() : int

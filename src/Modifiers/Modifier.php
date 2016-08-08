@@ -1,6 +1,7 @@
 <?php
 namespace DiceBag\Modifiers;
 
+use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 
 interface Modifier
@@ -14,8 +15,9 @@ interface Modifier
 
     /**
      * @param DiceInterface[] $dice
+     * @param DiceFactory $diceFactory
      *
-     * @return DiceInterface[]
+     * @return array|\DiceBag\Dice\DiceInterface[]
      */
-    public function apply(array $dice) : array;
+    public function apply(array $dice, DiceFactory $diceFactory) : array;
 }
