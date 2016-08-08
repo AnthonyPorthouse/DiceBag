@@ -87,9 +87,11 @@ class DicePool implements \JsonSerializable
      */
     public function getDroppedDice() : array
     {
-        return array_udiff($this->originalDice, $this->dice, function (DiceInterface $a, DiceInterface $b) {
+        $pool = array_udiff($this->originalDice, $this->dice, function (DiceInterface $a, DiceInterface $b) {
             return strcmp(spl_object_hash($a), spl_object_hash($b));
         });
+
+        return array_values($pool);
     }
 
     /**
