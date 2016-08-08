@@ -23,7 +23,7 @@ class Exploding extends BaseModifier implements Modifier
         foreach ($dice as $die) {
             $explodeOn = $explodeOn ?? $die->max();
 
-            while ($die->value() === $explodeOn) {
+            while ($die->value() >= $explodeOn) {
                 $newDice[] = $die = $factory->makeDice("d" . $die->max())[0];
             }
         }

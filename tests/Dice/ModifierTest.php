@@ -39,6 +39,22 @@ class ModifierTest extends TestCase
         ];
     }
 
+    public function testJson()
+    {
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
+        $randomizationEngine = $randomizationDummy->reveal();
+
+        $dice = new Modifier($randomizationEngine, 1);
+
+        $expected = json_encode([
+            'min' => 1,
+            'max' => 1,
+            'result' => 1,
+        ]);
+
+        $this->assertJsonStringEqualsJsonString($expected, json_encode($dice));
+    }
+
     public function testToString()
     {
         $randomizationDummy = $this->prophesize(RandomizationEngine::class);

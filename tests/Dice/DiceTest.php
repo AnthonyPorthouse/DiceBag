@@ -33,6 +33,23 @@ class DiceTest extends TestCase
         $this->assertEquals($valid, Dice::isValid($diceString));
     }
 
+    public function testJson()
+    {
+        $randomizationDummy = $this->prophesize(RandomizationEngine::class);
+        $randomizationDummy->getValue(1, 6)->willReturn(1);
+        $randomized = $randomizationDummy->reveal();
+
+        $dice = new Dice($randomized, 6);
+
+        $expected = json_encode([
+            'min' => 1,
+            'max' => 6,
+            'result' => 1,
+        ]);
+
+        $this->assertJsonStringEqualsJsonString($expected, json_encode($dice));
+    }
+
     public function testToString()
     {
         $randomizationDummy = $this->prophesize(RandomizationEngine::class);

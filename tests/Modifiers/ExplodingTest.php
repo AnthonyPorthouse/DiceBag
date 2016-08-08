@@ -36,10 +36,27 @@ class ExplodingTest extends TestCase
         $this->assertCount(2, $dicePool);
     }
 
+    public function testExplodesOnOtherValue()
+    {
+        $prophet = $this->prophesize(RandomizationEngine::class);
+        $prophet->getValue(1, 6)->willReturn(4, 5, 6, 4, 4);
+        $randomizer = $prophet->reveal();
+        $diceFactory = new DiceFactory($randomizer);
+
+        $modifier = new Exploding('3d6!5');
+        $dice = $diceFactory->makeDice('3d6!5');
+
+        /** @var DiceInterface[] $remainingDice */
+        $dicePool = $modifier->apply($dice, $diceFactory);
+
+        $this->assertCount(5, $dicePool);
+    }
+
     public function modifierProvider()
     {
         return [
             '4d6!' => ['4d6!', true],
+            '4d6!' => ['4d6!5', true],
             '4d6dh1' => ['4d6dh1', false],
             '4d6dl1' => ['4d6dl1', false],
             '4d6kh1' => ['4d6kh1', false],
