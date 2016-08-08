@@ -50,7 +50,11 @@ abstract class AbstractDice implements DiceInterface, \JsonSerializable
 
     public function jsonSerialize()
     {
-        return $this->value();
+        return [
+            'min' => $this->min(),
+            'max' => $this->max(),
+            'result' => $this->value(),
+        ];
     }
 
     public function __toString()
