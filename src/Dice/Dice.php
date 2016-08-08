@@ -17,7 +17,10 @@ class Dice extends AbstractDice
     {
         parent::__construct($randomization);
 
-        $this->value = $this->randomization->getValue(1, $size);
+        $this->min = 1;
+        $this->max = $size;
+
+        $this->value = $this->randomization->getValue($this->min, $this->max);
     }
 
     public static function make(RandomizationEngine $randomization, string $diceString) : array
