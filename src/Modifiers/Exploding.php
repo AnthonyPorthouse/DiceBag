@@ -6,7 +6,7 @@ use DiceBag\Dice\DiceInterface;
 
 class Exploding extends BaseModifier implements Modifier
 {
-    const MATCH = '/!(?<from>\d*)/';
+    const MATCH = '/!(?<condition><|>)?(?<from>\d*)/';
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array
@@ -17,17 +17,33 @@ class Exploding extends BaseModifier implements Modifier
             $explodeOn = $matches['from'];
         }
 
+        $condition = 'eq';
+        if (!empty($matches['condition'])) {
+            $condition = $matches['condition'];
+        }
+
         $newDice = [];
 
         /** @var DiceInterface $die */
         foreach ($dice as $die) {
             $explodeOn = $explodeOn ?? $die->max();
 
-            while ($die->value() >= $explodeOn) {
+            while ($this->conditionCheck($condition, $die->value(), $explodeOn)) {
                 $newDice[] = $die = $factory->makeDice("d" . $die->max())[0];
             }
         }
 
         return array_merge($dice, $newDice);
+    }
+
+    private function conditionCheck(string $condition, int $value, int $conditionValue) : bool
+    {
+        if ($condition === '<') {
+            return $value <= $conditionValue;
+        } elseif ($condition === '>') {
+            return $value >= $conditionValue;
+        }
+
+        return $value === $conditionValue;
     }
 }
