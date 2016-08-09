@@ -80,6 +80,62 @@ class ExplodingTest extends TestCase
         $this->assertCount(4, $dicePool);
     }
 
+    /**
+     * @dataProvider explodingStringProvider
+     *
+     * @param string $format Input Dice Format
+     * @param string $output Expected String Output
+     * @param int[] $randomValues Random Response values
+     */
+    public function testToString(string $format, string $output, array $randomValues)
+    {
+        $prophet = $this->prophesize(RandomizationEngine::class);
+        $prophet->getValue(1, 10)->willReturn(...$randomValues);
+        $randomizer = $prophet->reveal();
+        $factory = new DiceFactory($randomizer);
+
+        $modifier = new Exploding($format);
+        $dice = $factory->makeDice($format);
+
+        /** @var DiceInterface[] $remainingDice */
+        $modifier->apply($dice, $factory);
+
+        $this->assertEquals($output, $modifier->__toString());
+    }
+
+    /**
+     * @dataProvider explodingStringProvider
+     *
+     * @param string $format Input Dice Format
+     * @param string $output Expected String Output
+     * @param int[] $randomValues Random Response Values
+     */
+    public function testJsonSerialize(string $format, string $output, array $randomValues)
+    {
+        $prophet = $this->prophesize(RandomizationEngine::class);
+        $prophet->getValue(1, 10)->willReturn(...$randomValues);
+        $randomizer = $prophet->reveal();
+        $factory = new DiceFactory($randomizer);
+
+        $modifier = new Exploding($format);
+        $dice = $factory->makeDice($format);
+
+        /** @var DiceInterface[] $remainingDice */
+        $modifier->apply($dice, $factory);
+
+        $this->assertEquals($output, $modifier->__toString());
+    }
+
+    public function explodingStringProvider()
+    {
+        return [
+            '4d10!' => ['4d10!', 'Dice explode when result is = 10', [1]],
+            '4d10!9' => ['4d10!9', 'Dice explode when result is = 9', [1]],
+            '4d10!>8' => ['4d10!>8', 'Dice explode when result is >= 8', [1]],
+            '4d10!<2' => ['4d10!<2', 'Dice explode when result is <= 2', [10]],
+        ];
+    }
+
     public function modifierProvider()
     {
         return [

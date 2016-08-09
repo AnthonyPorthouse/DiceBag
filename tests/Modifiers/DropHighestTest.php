@@ -40,6 +40,38 @@ class DropHighestTest extends TestCase
         }
     }
 
+    public function testToString()
+    {
+        $prophet = $this->prophesize(RandomizationEngine::class);
+        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
+        $randomizer = $prophet->reveal();
+        $factory = new DiceFactory($randomizer);
+
+        $modifier = new DropHighest('4d6dh1');
+        $dice = $factory->makeDice('4d6dh1');
+
+        /** @var DiceInterface[] $remainingDice */
+        $remainingDice = $modifier->apply($dice, $factory);
+
+        $this->assertEquals("Drop the Highest 1 Dice", $modifier->__toString());
+    }
+
+    public function testJsonSerialize()
+    {
+        $prophet = $this->prophesize(RandomizationEngine::class);
+        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
+        $randomizer = $prophet->reveal();
+        $factory = new DiceFactory($randomizer);
+
+        $modifier = new DropHighest('4d6dh1');
+        $dice = $factory->makeDice('4d6dh1');
+
+        /** @var DiceInterface[] $remainingDice */
+        $remainingDice = $modifier->apply($dice, $factory);
+
+        $this->assertEquals("Drop the Highest 1 Dice", $modifier->jsonSerialize());
+    }
+
     public function modifierProvider()
     {
         return [

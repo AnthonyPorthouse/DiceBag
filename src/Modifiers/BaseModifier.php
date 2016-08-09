@@ -1,7 +1,7 @@
 <?php
 namespace DiceBag\Modifiers;
 
-abstract class BaseModifier implements ModifierInterface
+abstract class BaseModifier implements ModifierInterface, \JsonSerializable
 {
     /** @var string $format */
     protected $format;
@@ -22,5 +22,10 @@ abstract class BaseModifier implements ModifierInterface
     public static function isValid(string $format) : bool
     {
         return preg_match(static::MATCH, $format);
+    }
+
+    public function jsonSerialize() : string
+    {
+        return $this->__toString();
     }
 }

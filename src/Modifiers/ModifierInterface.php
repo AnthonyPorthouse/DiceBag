@@ -24,4 +24,11 @@ interface ModifierInterface
      * @return DiceInterface[]
      */
     public function apply(array $dice, DiceFactory $diceFactory) : array;
+
+    /**
+     * A string interpretation of the Modifier
+     *
+     * @return string
+     */
+    public function __toString() : string;
 }
