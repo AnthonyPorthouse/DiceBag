@@ -40,6 +40,7 @@ class DiceBag implements \JsonSerializable
         $randomizationEngine = $randomizationEngine ?? new RandomInt();
 
         $diceString = strtolower($diceString);
+        $diceString = preg_replace('/\s/', '', $diceString);
 
         $diceStrings = explode('+', $diceString);
 

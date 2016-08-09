@@ -26,8 +26,6 @@ class DiceFactory
             Modifier::class,
         ];
 
-        $diceString = trim($diceString);
-
         foreach ($types as $type) {
             if ($type::isValid($diceString)) {
                 return $type::make($this->randomizationEngine, $diceString);
