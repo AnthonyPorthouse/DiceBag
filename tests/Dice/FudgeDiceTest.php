@@ -38,8 +38,8 @@ class FudgeDiceTest extends TestCase
         return [
             ['d6', false],
             ['2d6', false],
-            ['f', true],
-            ['2f', true],
+            ['dF', true],
+            ['2dF', true],
             ['1', false],
             ['', false],
         ];
