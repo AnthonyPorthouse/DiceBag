@@ -3,7 +3,7 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class KeepHighest extends BaseModifier implements Modifier
+class KeepHighest extends BaseModifier
 {
     const MATCH = '/kh(?<highest>\d+)/';
 

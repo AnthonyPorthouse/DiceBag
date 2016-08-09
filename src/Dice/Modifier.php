@@ -5,18 +5,27 @@ use DiceBag\Randomization\RandomizationEngine;
 
 class Modifier extends AbstractDice implements DiceInterface
 {
-    const FORMAT = '/^(?<value>\d+)$/';
+    const FORMAT = '/^(?<value>-?\d+)$/';
 
+    /**
+     * Modifier constructor.
+     *
+     * @param RandomizationEngine $randomization
+     * @param string $modifier
+     */
     public function __construct(RandomizationEngine $randomization, string $modifier)
     {
         parent::__construct($randomization);
 
-        $this->min = (int) $modifier;
-        $this->max = (int) $modifier;
+        $modifier = (int) $modifier;
 
-        $this->value = (int) $modifier;
+        $this->min = $modifier;
+        $this->max = $modifier;
+
+        $this->value = $modifier;
     }
 
+    /** {@inheritdoc} */
     public static function make(RandomizationEngine $randomization, string $diceString) : array
     {
         preg_match(static::FORMAT, $diceString, $tokens);
@@ -24,6 +33,7 @@ class Modifier extends AbstractDice implements DiceInterface
         return [new static($randomization, $tokens['value'])];
     }
 
+    /** {@inheritdoc} */
     public function __toString() : string
     {
         return $this->value();

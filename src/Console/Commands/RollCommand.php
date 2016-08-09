@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RollCommand extends Command
 {
+    /** {@inheritdoc} */
     protected function configure()
     {
         $this->setName('roll')
@@ -20,6 +21,7 @@ class RollCommand extends Command
             );
     }
 
+    /** {@inheritdoc} */
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         $diceBag = DiceBag::factory($input->getArgument('dice'));

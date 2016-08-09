@@ -40,6 +40,7 @@ class DiceBag implements \JsonSerializable
         $randomizationEngine = $randomizationEngine ?? new RandomInt();
 
         $diceString = strtolower($diceString);
+        $diceString = preg_replace('/\s/', '', $diceString);
 
         $diceStrings = explode('+', $diceString);
 
@@ -68,7 +69,8 @@ class DiceBag implements \JsonSerializable
         }, 0);
     }
 
-    public function jsonSerialize()
+    /** {@inheritdoc} */
+    public function jsonSerialize() : array
     {
         return [
             'pools' => $this->getDicePools(),
@@ -76,6 +78,11 @@ class DiceBag implements \JsonSerializable
         ];
     }
 
+    /**
+     * Returns a string representation of the DiceBag
+     *
+     * @return string
+     */
     public function __toString() : string
     {
         return implode(' + ', $this->dicePools) . ' = ' . $this->getTotal();

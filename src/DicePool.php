@@ -1,7 +1,6 @@
 <?php
 namespace DiceBag;
 
-use DiceBag\Dice\Dice;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 use DiceBag\Modifiers\DropHighest;
@@ -9,7 +8,7 @@ use DiceBag\Modifiers\DropLowest;
 use DiceBag\Modifiers\Exploding;
 use DiceBag\Modifiers\KeepHighest;
 use DiceBag\Modifiers\KeepLowest;
-use DiceBag\Modifiers\Modifier;
+use DiceBag\Modifiers\ModifierInterface;
 
 class DicePool implements \JsonSerializable
 {
@@ -22,8 +21,6 @@ class DicePool implements \JsonSerializable
     /** @var string $format */
     private $format;
 
-    private $parsed = [];
-
     const POSSIBLE_MODIFIERS = [
         Exploding::class,
         KeepHighest::class,
@@ -32,6 +29,12 @@ class DicePool implements \JsonSerializable
         DropLowest::class,
     ];
 
+    /**
+     * DicePool constructor.
+     *
+     * @param DiceFactory $factory
+     * @param string $diceString
+     */
     public function __construct(DiceFactory $factory, string $diceString)
     {
         $this->format = $diceString;
@@ -43,15 +46,17 @@ class DicePool implements \JsonSerializable
     }
 
     /**
+     * Sets up the modifiers for the dice string given
+     *
      * @param string[] $modifiers An array of modifier class names
      * @param string $diceString The Dice String we're configuring the filers for
      *
-     * @return Modifier[]
+     * @return ModifierInterface[]
      */
     private function setupModifiers(array $modifiers, string $diceString) : array
     {
         return array_map(function (string $modifierClass) use ($diceString) {
-            /** @var Modifier $modifierClass */
+            /** @var ModifierInterface $modifierClass */
             if ($modifierClass::isValid($diceString)) {
                 return new $modifierClass($diceString);
             }
@@ -59,16 +64,18 @@ class DicePool implements \JsonSerializable
     }
 
     /**
+     * Apply the modifiers to the dice String
+     *
      * @param DiceInterface[] $dice
      * @param DiceFactory $diceFactory
-     * @param Modifier[] $modifiers
+     * @param ModifierInterface[] $modifiers
      *
      * @return DiceInterface[]
      */
     private function applyModifiers(array $dice, DiceFactory $diceFactory, array $modifiers) : array
     {
         /** @var DiceInterface[] $dice */
-        $dice = array_reduce($modifiers, function (array $dice, Modifier $modifier) use ($diceFactory) : array {
+        $dice = array_reduce($modifiers, function (array $dice, ModifierInterface $modifier) use ($diceFactory) : array {
             return $modifier->apply($dice, $diceFactory);
         }, $dice);
 
@@ -111,7 +118,8 @@ class DicePool implements \JsonSerializable
         }, 0);
     }
 
-    public function jsonSerialize()
+    /** {@inheritdoc} */
+    public function jsonSerialize() : array
     {
         return [
             'dice' => $this->getDice(),
@@ -120,6 +128,11 @@ class DicePool implements \JsonSerializable
         ];
     }
 
+    /**
+     * Returns a string representation of the DicePool
+     *
+     * @return string
+     */
     public function __toString() : string
     {
         $droppedDice = array_udiff($this->originalDice, $this->dice, function (DiceInterface $a, DiceInterface $b) {
@@ -127,7 +140,7 @@ class DicePool implements \JsonSerializable
         });
 
         $droppedDiceString = array_reduce($droppedDice, function (string $output, DiceInterface $dice) {
-            return $output .= ' [' . $dice->value() . "\u{0336}]";
+            return $output . ' [' . $dice->value() . "\u{0336}]";
         }, '');
 
         return '[' . implode(' ', $this->dice) . $droppedDiceString . ' (' . $this->getTotal() . ')]';

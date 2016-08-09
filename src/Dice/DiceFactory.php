@@ -8,6 +8,17 @@ class DiceFactory
     /** @var RandomizationEngine $randomizationEngine */
     private $randomizationEngine;
 
+    const DICE_TYPES = [
+        Dice::class,
+        FudgeDice::class,
+        Modifier::class,
+    ];
+
+    /**
+     * DiceFactory constructor.
+     *
+     * @param RandomizationEngine $randomizationEngine
+     */
     public function __construct(RandomizationEngine $randomizationEngine)
     {
         $this->randomizationEngine = $randomizationEngine;
@@ -20,13 +31,7 @@ class DiceFactory
      */
     public function makeDice(string $diceString) : array
     {
-        $types = [
-            Dice::class,
-            FudgeDice::class,
-            Modifier::class,
-        ];
-
-        foreach ($types as $type) {
+        foreach (self::DICE_TYPES as $type) {
             if ($type::isValid($diceString)) {
                 return $type::make($this->randomizationEngine, $diceString);
             }

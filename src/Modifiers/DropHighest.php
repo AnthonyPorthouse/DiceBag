@@ -3,7 +3,7 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class DropHighest extends BaseModifier implements Modifier
+class DropHighest extends BaseModifier
 {
     const MATCH = '/dh(?<highest>\d+)/';
 
