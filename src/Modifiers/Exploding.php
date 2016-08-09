@@ -6,7 +6,7 @@ use DiceBag\Dice\DiceInterface;
 
 class Exploding extends BaseModifier
 {
-    const MATCH = '/!(?<condition><|>)?(?<from>\d*)/i';
+    const MATCH = '/!(?<condition><|>)?(?<from>\d+)?/i';
 
     /** @var int $explodeOn */
     private $explodeOn;
@@ -18,19 +18,14 @@ class Exploding extends BaseModifier
     {
         preg_match(static::MATCH, $this->format, $matches);
 
-        $explodeOn = $matches['from'] ?? null;
-        $condition = $matches['condition'] ?? 'eq';
+        $this->explodeOn = (int) ($matches['from'] ?? $dice[0]->max());
+        $this->condition = $matches['condition'] ?? 'eq';
 
         $newDice = [];
 
         /** @var DiceInterface $die */
         foreach ($dice as $die) {
-            $explodeOn = $explodeOn ?: $die->max();
-
-            $this->explodeOn = (int) $explodeOn;
-            $this->condition = $condition;
-
-            while ($this->conditionCheck($condition, $die->value(), $explodeOn)) {
+            while ($this->conditionCheck($this->condition, $die->value(), $this->explodeOn)) {
                 $newDice[] = $die = $factory->makeDice("d" . $die->max())[0];
             }
         }
