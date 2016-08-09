@@ -5,7 +5,7 @@ use DiceBag\Randomization\RandomizationEngine;
 
 class FudgeDice extends AbstractDice
 {
-    const FORMAT = '/^(?<quantity>\d*)dF/';
+    const FORMAT = '/^(?<quantity>\d*)dF/i';
 
     /**
      * FudgeDice constructor.

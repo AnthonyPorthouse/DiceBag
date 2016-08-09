@@ -60,4 +60,15 @@ class DiceBagTest extends TestCase
 
         $this->assertEquals('[[6] [6] (12)] + [10 (10)] = 22', (string) $diceBag);
     }
+
+    public function testCaseInsensitivity()
+    {
+        $diceBag = DiceBag::factory('4dF');
+        $this->assertCount(1, $diceBag->getDicePools());
+        $this->assertCount(4, $diceBag->getDicePools()[0]->getDice());
+
+        $diceBag = DiceBag::factory('4df');
+        $this->assertCount(1, $diceBag->getDicePools());
+        $this->assertCount(4, $diceBag->getDicePools()[0]->getDice());
+    }
 }

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Dice Formats are all case insensitive, since we lowercase all input. This makes Fate Dice possible to from the
+`DiceBag::factory` method.
 
 ## [v0.0.1] - 2016-08-09
 ### Added

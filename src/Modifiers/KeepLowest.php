@@ -5,7 +5,7 @@ use DiceBag\Dice\DiceFactory;
 
 class KeepLowest extends BaseModifier
 {
-    const MATCH = '/kl(?<lowest>\d+)/';
+    const MATCH = '/kl(?<lowest>\d+)/i';
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array

@@ -5,7 +5,7 @@ use DiceBag\Dice\DiceFactory;
 
 class DropLowest extends BaseModifier
 {
-    const MATCH = '/dl(?<lowest>\d+)/';
+    const MATCH = '/dl(?<lowest>\d+)/i';
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array
