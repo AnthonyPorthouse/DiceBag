@@ -2,7 +2,7 @@
 namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
-use DiceBag\Randomization\MersenneTwister;
+use DiceBag\Randomization\RandomInt;
 use DiceBag\Randomization\RandomizationEngine;
 
 class DiceBag implements \JsonSerializable
@@ -18,7 +18,7 @@ class DiceBag implements \JsonSerializable
      */
     public function __construct(array $diceStrings, RandomizationEngine $randomizationEngine = null)
     {
-        $randomizationEngine = $randomizationEngine ?? new MersenneTwister();
+        $randomizationEngine = $randomizationEngine ?? new RandomInt();
 
         $factory = new DiceFactory($randomizationEngine);
 
@@ -37,7 +37,7 @@ class DiceBag implements \JsonSerializable
      */
     public static function factory(string $diceString, RandomizationEngine $randomizationEngine = null) : DiceBag
     {
-        $randomizationEngine = $randomizationEngine ?? new MersenneTwister();
+        $randomizationEngine = $randomizationEngine ?? new RandomInt();
 
         $diceString = strtolower($diceString);
 
