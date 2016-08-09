@@ -6,7 +6,7 @@ abstract class BaseModifier implements ModifierInterface
     /** @var string $format */
     protected $format;
 
-    const MATCH = '//';
+    const MATCH = '//i';
 
     /**
      * BaseModifier constructor.

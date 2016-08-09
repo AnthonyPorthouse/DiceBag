@@ -5,7 +5,7 @@ use DiceBag\Randomization\RandomizationEngine;
 
 abstract class AbstractDice implements DiceInterface, \JsonSerializable
 {
-    const FORMAT = '//';
+    const FORMAT = '//i';
 
     /** @var int $min */
     protected $min;

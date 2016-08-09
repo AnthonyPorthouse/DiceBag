@@ -5,7 +5,7 @@ use DiceBag\Dice\DiceFactory;
 
 class KeepHighest extends BaseModifier
 {
-    const MATCH = '/kh(?<highest>\d+)/';
+    const MATCH = '/kh(?<highest>\d+)/i';
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array

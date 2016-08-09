@@ -5,7 +5,7 @@ use DiceBag\Randomization\RandomizationEngine;
 
 class Modifier extends AbstractDice implements DiceInterface
 {
-    const FORMAT = '/^(?<value>-?\d+)$/';
+    const FORMAT = '/^(?<value>-?\d+)$/i';
 
     /**
      * Modifier constructor.
