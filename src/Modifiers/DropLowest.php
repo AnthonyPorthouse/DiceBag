@@ -3,7 +3,7 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class DropLowest extends BaseModifier implements Modifier
+class DropLowest extends BaseModifier
 {
     const MATCH = '/dl(?<lowest>\d+)/';
 

@@ -18,37 +18,42 @@ abstract class AbstractDice implements DiceInterface, \JsonSerializable
     /** @var RandomizationEngine $randomization */
     protected $randomization;
 
+    /**
+     * AbstractDice constructor.
+     *
+     * @param RandomizationEngine $randomization
+     */
     public function __construct(RandomizationEngine $randomization)
     {
         $this->randomization = $randomization;
     }
 
+    /** {@inheritdoc} */
     public function min() : int
     {
         return $this->min;
     }
 
+    /** {@inheritdoc} */
     public function max() : int
     {
         return $this->max;
     }
 
+    /** {@inheritdoc} */
     public function value() : int
     {
         return $this->value;
     }
 
-    /**
-     * @param string $diceString
-     *
-     * @return bool
-     */
+    /** {@inheritdoc} */
     public static function isValid(string $diceString) : bool
     {
         return preg_match(static::FORMAT, $diceString);
     }
 
-    public function jsonSerialize()
+    /** {@inheritdoc} */
+    public function jsonSerialize() : array
     {
         return [
             'min' => $this->min(),
@@ -57,7 +62,12 @@ abstract class AbstractDice implements DiceInterface, \JsonSerializable
         ];
     }
 
-    public function __toString()
+    /**
+     * Returns a String representation of the dice
+     *
+     * @return string
+     */
+    public function __toString() : string
     {
         return '[' . $this->value() . ']';
     }

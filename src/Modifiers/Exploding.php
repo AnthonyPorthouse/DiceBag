@@ -4,7 +4,7 @@ namespace DiceBag\Modifiers;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 
-class Exploding extends BaseModifier implements Modifier
+class Exploding extends BaseModifier
 {
     const MATCH = '/!(?<condition><|>)?(?<from>\d*)/';
 
@@ -30,6 +30,15 @@ class Exploding extends BaseModifier implements Modifier
         return array_merge($dice, $newDice);
     }
 
+    /**
+     * Checks if the value matches the condition against the conditions value
+     *
+     * @param string $condition the condition we're trying
+     * @param int $value The value to check
+     * @param int $conditionValue The conditions value to check against
+     *
+     * @return bool true if the value matches the condition against the condition value, false otherwise
+     */
     private function conditionCheck(string $condition, int $value, int $conditionValue) : bool
     {
         if ($condition === '<') {

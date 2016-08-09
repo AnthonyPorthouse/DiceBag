@@ -3,7 +3,7 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class KeepLowest extends BaseModifier implements Modifier
+class KeepLowest extends BaseModifier
 {
     const MATCH = '/kl(?<lowest>\d+)/';
 

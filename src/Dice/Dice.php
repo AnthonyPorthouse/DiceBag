@@ -23,6 +23,9 @@ class Dice extends AbstractDice
         $this->value = $this->randomization->getValue($this->min, $this->max);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function make(RandomizationEngine $randomization, string $diceString) : array
     {
         preg_match(static::FORMAT, $diceString, $tokens);
