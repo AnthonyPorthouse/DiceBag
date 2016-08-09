@@ -13,7 +13,7 @@ class KeepHighest extends BaseModifier
     public function apply(array $dice, DiceFactory $factory) : array
     {
         preg_match(static::MATCH, $this->format, $matches);
-        $this->highest = $matches['highest'];
+        $this->highest = (int) $matches['highest'];
 
         sort($dice);
 

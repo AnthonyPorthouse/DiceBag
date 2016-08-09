@@ -27,7 +27,7 @@ class Exploding extends BaseModifier
         foreach ($dice as $die) {
             $explodeOn = $explodeOn ?: $die->max();
 
-            $this->explodeOn = $explodeOn;
+            $this->explodeOn = (int) $explodeOn;
             $this->condition = $condition;
 
             while ($this->conditionCheck($condition, $die->value(), $explodeOn)) {

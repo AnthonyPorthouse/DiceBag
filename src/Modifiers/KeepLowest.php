@@ -14,7 +14,7 @@ class KeepLowest extends BaseModifier
     public function apply(array $dice, DiceFactory $factory) : array
     {
         preg_match(static::MATCH, $this->format, $matches);
-        $this->lowest = $matches['lowest'];
+        $this->lowest = (int) $matches['lowest'];
 
         sort($dice);
 
