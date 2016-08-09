@@ -12,21 +12,15 @@ class Exploding extends BaseModifier implements Modifier
     public function apply(array $dice, DiceFactory $factory) : array
     {
         preg_match(static::MATCH, $this->format, $matches);
-        $explodeOn = null;
-        if (!empty($matches['from'])) {
-            $explodeOn = $matches['from'];
-        }
 
-        $condition = 'eq';
-        if (!empty($matches['condition'])) {
-            $condition = $matches['condition'];
-        }
+        $explodeOn = $matches['from'] ?? null;
+        $condition = $matches['condition'] ?? 'eq';
 
         $newDice = [];
 
         /** @var DiceInterface $die */
         foreach ($dice as $die) {
-            $explodeOn = $explodeOn ?? $die->max();
+            $explodeOn = $explodeOn ?: $die->max();
 
             while ($this->conditionCheck($condition, $die->value(), $explodeOn)) {
                 $newDice[] = $die = $factory->makeDice("d" . $die->max())[0];
