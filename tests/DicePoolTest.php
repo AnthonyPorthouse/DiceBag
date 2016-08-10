@@ -74,6 +74,7 @@ class DicePoolTest extends TestCase
 
         $jsonSerialize = $dicePool->jsonSerialize();
 
+        $this->assertArrayHasKey('appliedModifiers', $jsonSerialize);
         $this->assertArrayHasKey('dice', $jsonSerialize);
         $this->assertArrayHasKey('dropped', $jsonSerialize);
         $this->assertArrayHasKey('total', $jsonSerialize);

@@ -3,18 +3,17 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class DropHighest extends BaseModifier
+final class DropHighest extends BaseDropKeep
 {
-    const MATCH = '/dh(?<highest>\d+)/i';
+    const MATCH = '/dh(?<match>\d+)/i';
+
+    protected $keep = false;
+    protected $highest = true;
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array
     {
-        preg_match(static::MATCH, $this->format, $matches);
-        $highest = $matches['highest'];
-
-        sort($dice);
-
-        return array_slice($dice, 0, 0 - $highest);
+        $dice = parent::apply($dice, $factory);
+        return array_slice($dice, 0, 0 - $this->match);
     }
 }

@@ -3,18 +3,17 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class KeepLowest extends BaseModifier
+final class KeepLowest extends BaseDropKeep
 {
-    const MATCH = '/kl(?<lowest>\d+)/i';
+    const MATCH = '/kl(?<match>\d+)/i';
+
+    protected $keep = true;
+    protected $highest = false;
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array
     {
-        preg_match(static::MATCH, $this->format, $matches);
-        $lowest = $matches['lowest'];
-
-        sort($dice);
-
-        return array_slice($dice, 0, $lowest);
+        $dice = parent::apply($dice, $factory);
+        return array_slice($dice, 0, $this->match);
     }
 }

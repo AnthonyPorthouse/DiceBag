@@ -29,6 +29,9 @@ class DicePool implements \JsonSerializable
         DropLowest::class,
     ];
 
+    /** @var ModifierInterface[] $appliedModifiers */
+    private $appliedModifiers = [];
+
     /**
      * DicePool constructor.
      *
@@ -43,6 +46,7 @@ class DicePool implements \JsonSerializable
         $modifiers = $this->setupModifiers(self::POSSIBLE_MODIFIERS, $diceString);
         $modifiers = array_filter($modifiers);
         $this->dice = $this->applyModifiers($this->originalDice, $factory, $modifiers);
+        $this->appliedModifiers = $modifiers;
     }
 
     /**
@@ -80,6 +84,16 @@ class DicePool implements \JsonSerializable
         }, $dice);
 
         return $dice;
+    }
+
+    /**
+     * Get the Applied Modifiers
+     *
+     * @return ModifierInterface[]
+     */
+    public function getAppliedModifiers()
+    {
+        return array_values($this->appliedModifiers);
     }
 
     /**
@@ -122,6 +136,7 @@ class DicePool implements \JsonSerializable
     public function jsonSerialize() : array
     {
         return [
+            'appliedModifiers' => $this->getAppliedModifiers(),
             'dice' => $this->getDice(),
             'dropped' => $this->getDroppedDice(),
             'total' => $this->getTotal(),
