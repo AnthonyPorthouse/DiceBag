@@ -3,27 +3,17 @@ namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
-class DropLowest extends BaseModifier
+final class DropLowest extends BaseDropKeep
 {
-    const MATCH = '/dl(?<lowest>\d+)/i';
+    const MATCH = '/dl(?<match>\d+)/i';
 
-    /** @var int $lowest */
-    private $lowest;
+    protected $keep = false;
+    protected $highest = false;
 
     /** {@inheritdoc} */
     public function apply(array $dice, DiceFactory $factory) : array
     {
-        preg_match(static::MATCH, $this->format, $matches);
-        $this->lowest = (int) $matches['lowest'];
-
-        sort($dice);
-
-        return array_slice($dice, $this->lowest);
-    }
-
-    /** {@inheritdoc} */
-    public function __toString() : string
-    {
-        return "Drop the Lowest " . $this->lowest . " Dice";
+        $dice = parent::apply($dice, $factory);
+        return array_slice($dice, $this->match);
     }
 }

@@ -4,7 +4,7 @@ namespace DiceBag\Modifiers;
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
 
-class Exploding extends BaseModifier
+final class Exploding extends BaseModifier
 {
     const MATCH = '/!(?<condition><|>)?(?<from>\d+)?/i';
 
