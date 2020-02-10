@@ -14,7 +14,7 @@ class DiceFactoryTest extends TestCase
     /** @var DiceFactory $factory */
     private $factory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = new DiceFactory(new MersenneTwister());
     }
