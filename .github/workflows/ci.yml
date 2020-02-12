@@ -14,16 +14,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Get Cache Dir
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache Deps
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
