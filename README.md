@@ -1,10 +1,7 @@
 # DiceBag
 
-[![Travis](https://img.shields.io/travis/AnthonyPorthouse/DiceBag.svg)][Travis]
-[![Scrutinizer](https://img.shields.io/scrutinizer/g/AnthonyPorthouse/DiceBag.svg)][Scrutinizer]
-[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/AnthonyPorthouse/DiceBag.svg)][Scrutinizer]
-[![StyleCI](https://styleci.io/repos/64483057/shield?style=flat)][StyleCI]
-[![Dependency Status](https://www.versioneye.com/php/porthou:dicebag/dev-master/badge?style=flat)][VersionEye]
+[![Build Status](https://github.com/AnthonyPorthouse/DiceBag/workflows/ci/badge.svg)][Repo]
+[![Dependency Status](https://www.versioneye.com/php/porthou:dicebag/dev-master/badge?style=flat)]
 
 Create dice roll results from standard dice notation
 
@@ -20,7 +17,7 @@ echo $diceBag;
 
 ## Installation
 ### Prerequisites
-DiceBag Requires PHP 7.0 or greater.
+DiceBag Requires PHP 7.1 or greater.
 
 ### Installation Through Composer
 Installation through composer is simple, just require it through the command line with the following command:
@@ -102,7 +99,4 @@ equal to or greater than, or equal to or less than, the value specified.
 + `4d6!>5` Rolls 4 d6 and and any results of 5 or greater will add an additional die to the pool.
 + `4d6!<2` Rolls 4 d6 and and any results of 2 or less will add an additional die to the pool.
 
-[Travis]: https://travis-ci.org/AnthonyPorthouse/DiceBag
-[Scrutinizer]: https://scrutinizer-ci.com/g/AnthonyPorthouse/DiceBag
-[StyleCI]: https://styleci.io/repos/64483057
-[VersionEye]: https://www.versioneye.com/php/porthou:dicebag
+[Repo]: https://github.com/AnthonyPorthouse/DiceBag
