@@ -13,7 +13,7 @@ class DiceBag implements \JsonSerializable
     /**
      * DiceBag constructor.
      *
-     * @param array $diceStrings
+     * @param string[] $diceStrings
      * @param RandomizationEngine $randomizationEngine
      */
     public function __construct(array $diceStrings, RandomizationEngine $randomizationEngine = null)
@@ -40,7 +40,7 @@ class DiceBag implements \JsonSerializable
         $randomizationEngine = $randomizationEngine ?? new RandomInt();
 
         $diceString = strtolower($diceString);
-        $diceString = preg_replace('/\s/', '', $diceString);
+        $diceString = preg_replace('/\s/', '', $diceString) ?? '';
 
         $diceStrings = explode('+', $diceString);
 
@@ -69,7 +69,9 @@ class DiceBag implements \JsonSerializable
         }, 0);
     }
 
-    /** {@inheritdoc} */
+    /**
+     * @return mixed[]
+     */
     public function jsonSerialize() : array
     {
         return [

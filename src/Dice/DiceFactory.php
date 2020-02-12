@@ -8,7 +8,7 @@ class DiceFactory
     /** @var RandomizationEngine $randomizationEngine */
     private $randomizationEngine;
 
-    const DICE_TYPES = [
+    public const DICE_TYPES = [
         Dice::class,
         FudgeDice::class,
         Modifier::class,

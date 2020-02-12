@@ -6,6 +6,16 @@ use PHPUnit\Framework\TestCase;
 
 class DiceBagTest extends TestCase
 {
+    /**
+     * @var \Prophecy\Prophecy\ObjectProphecy|RandomizationEngine
+     */
+    private $engine;
+
+    public function setUp(): void
+    {
+        $this->engine = $this->prophesize(RandomizationEngine::class);
+    }
+
     public function testFactory()
     {
         $diceBag = DiceBag::factory('2d6+10');
@@ -29,11 +39,9 @@ class DiceBagTest extends TestCase
 
     public function testGetTotal()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(6);
-        $randomization = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(6);
 
-        $diceBag = DiceBag::factory('2d6+10', $randomization);
+        $diceBag = DiceBag::factory('2d6+10', $this->engine->reveal());
 
         $this->assertEquals(22, $diceBag->getTotal());
     }
@@ -52,13 +60,11 @@ class DiceBagTest extends TestCase
 
     public function testToString()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(6);
-        $randomization = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(6);
 
-        $diceBag = DiceBag::factory('2d6+10', $randomization);
+        $diceBag = DiceBag::factory('2d6+10', $this->engine->reveal());
 
-        $this->assertEquals('[[6] [6] (12)] + [10 (10)] = 22', (string) $diceBag);
+        $this->assertEquals('[[6] [6] = 12] + [10 = 10] = 22', (string) $diceBag);
     }
 
     public function testCaseInsensitivity()

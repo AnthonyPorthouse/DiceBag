@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RollCommand extends Command
 {
     /** {@inheritdoc} */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('roll')
             ->setDescription('Rolls a Dice')
@@ -24,7 +24,12 @@ class RollCommand extends Command
     /** {@inheritdoc} */
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
-        $diceBag = DiceBag::factory($input->getArgument('dice'));
+        $diceString = $input->getArgument('dice') ?? '';
+        if (is_array($diceString)) {
+            $diceString = implode(' ', $diceString);
+        }
+
+        $diceBag = DiceBag::factory($diceString);
 
         $output->writeln($diceBag->__toString());
 

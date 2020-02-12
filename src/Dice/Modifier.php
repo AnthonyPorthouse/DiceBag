@@ -3,9 +3,9 @@ namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
 
-class Modifier extends AbstractDice implements DiceInterface
+final class Modifier extends AbstractDice
 {
-    const FORMAT = '/^(?<value>-?\d+)$/i';
+    protected const FORMAT = '/^(?<value>-?\d+)$/i';
 
     /**
      * Modifier constructor.
@@ -36,6 +36,6 @@ class Modifier extends AbstractDice implements DiceInterface
     /** {@inheritdoc} */
     public function __toString() : string
     {
-        return $this->value();
+        return (string)$this->value();
     }
 }

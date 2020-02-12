@@ -3,6 +3,7 @@ namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
+use DiceBag\Exceptions\UnknownModifierException;
 use DiceBag\Modifiers\DropHighest;
 use DiceBag\Modifiers\DropLowest;
 use DiceBag\Modifiers\Exploding;
@@ -21,7 +22,7 @@ class DicePool implements \JsonSerializable
     /** @var string $format */
     private $format;
 
-    const POSSIBLE_MODIFIERS = [
+    public const POSSIBLE_MODIFIERS = [
         Exploding::class,
         KeepHighest::class,
         KeepLowest::class,
@@ -30,7 +31,7 @@ class DicePool implements \JsonSerializable
     ];
 
     /** @var ModifierInterface[] $appliedModifiers */
-    private $appliedModifiers = [];
+    private $appliedModifiers;
 
     /**
      * DicePool constructor.
@@ -59,11 +60,11 @@ class DicePool implements \JsonSerializable
      */
     private function setupModifiers(array $modifiers, string $diceString) : array
     {
-        return array_map(function (string $modifierClass) use ($diceString) {
-            /** @var ModifierInterface $modifierClass */
-            if ($modifierClass::isValid($diceString)) {
-                return new $modifierClass($diceString);
+        return array_map(static function (string $modifierClass) use ($diceString) {
+            if (!is_a($modifierClass, ModifierInterface::class, true) || !$modifierClass::isValid($diceString)) {
+                return null;
             }
+            return new $modifierClass($diceString);
         }, $modifiers);
     }
 
@@ -79,7 +80,7 @@ class DicePool implements \JsonSerializable
     private function applyModifiers(array $dice, DiceFactory $diceFactory, array $modifiers) : array
     {
         /** @var DiceInterface[] $dice */
-        $dice = array_reduce($modifiers, function (array $dice, ModifierInterface $modifier) use ($diceFactory) : array {
+        $dice = array_reduce($modifiers, static function (array $dice, ModifierInterface $modifier) use ($diceFactory) : array {
             return $modifier->apply($dice, $diceFactory);
         }, $dice);
 
@@ -132,7 +133,9 @@ class DicePool implements \JsonSerializable
         }, 0);
     }
 
-    /** {@inheritdoc} */
+    /**
+     * @return array<mixed>
+     */
     public function jsonSerialize() : array
     {
         return [
@@ -150,14 +153,15 @@ class DicePool implements \JsonSerializable
      */
     public function __toString() : string
     {
-        $droppedDice = array_udiff($this->originalDice, $this->dice, function (DiceInterface $a, DiceInterface $b) {
+        $droppedDice = array_udiff($this->originalDice, $this->dice, static function (DiceInterface $a, DiceInterface $b) {
             return strcmp(spl_object_hash($a), spl_object_hash($b));
         });
 
-        $droppedDiceString = array_reduce($droppedDice, function (string $output, DiceInterface $dice) {
-            return $output . ' [' . $dice->value() . "\u{0336}]";
+        $droppedDiceString = array_reduce($droppedDice, static function (string $output, DiceInterface $dice) {
+            $value = preg_replace('/(.)/', "$1\u{0336}", (string)$dice->value());
+            return sprintf('%s [%s]', $output, $value);
         }, '');
 
-        return '[' . implode(' ', $this->dice) . $droppedDiceString . ' (' . $this->getTotal() . ')]';
+        return sprintf('[%s%s = %s]', implode(' ', $this->dice), $droppedDiceString, $this->getTotal());
     }
 }

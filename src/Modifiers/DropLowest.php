@@ -5,7 +5,7 @@ use DiceBag\Dice\DiceFactory;
 
 final class DropLowest extends BaseDropKeep
 {
-    const MATCH = '/dl(?<match>\d+)/i';
+    protected const MATCH = '/dl(?<match>\d+)/i';
 
     protected $keep = false;
     protected $highest = false;

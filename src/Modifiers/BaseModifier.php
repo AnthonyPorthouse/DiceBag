@@ -6,7 +6,7 @@ abstract class BaseModifier implements ModifierInterface, \JsonSerializable
     /** @var string $format */
     protected $format;
 
-    const MATCH = '//i';
+    protected const MATCH = '//i';
 
     /**
      * BaseModifier constructor.
@@ -21,7 +21,7 @@ abstract class BaseModifier implements ModifierInterface, \JsonSerializable
     /** {@inheritdoc} */
     public static function isValid(string $format) : bool
     {
-        return preg_match(static::MATCH, $format);
+        return (bool)preg_match(static::MATCH, $format);
     }
 
     public function jsonSerialize() : string

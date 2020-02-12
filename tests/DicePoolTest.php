@@ -8,13 +8,21 @@ use PHPUnit\Framework\TestCase;
 
 class DicePoolTest extends TestCase
 {
+    /**
+     * @var \Prophecy\Prophecy\ObjectProphecy|RandomizationEngine
+     */
+    private $engine;
+
+    public function setUp(): void
+    {
+        $this->engine = $this->prophesize(RandomizationEngine::class);
+    }
+
     public function testNewDicePool()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
-        $ranomizationEngine = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(1, 2, 3, 4);
 
-        $factory = new DiceFactory($ranomizationEngine);
+        $factory = new DiceFactory($this->engine->reveal());
 
         $dicePool = new DicePool($factory, '4d6');
 
@@ -23,11 +31,9 @@ class DicePoolTest extends TestCase
 
     public function testGetDice()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
-        $ranomizationEngine = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(1, 2, 3, 4);
 
-        $factory = new DiceFactory($ranomizationEngine);
+        $factory = new DiceFactory($this->engine->reveal());
 
         $dicePool = new DicePool($factory, '4d6');
 
@@ -37,11 +43,9 @@ class DicePoolTest extends TestCase
 
     public function testGetDroppedDice()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
-        $ranomizationEngine = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(1, 2, 3, 4);
 
-        $factory = new DiceFactory($ranomizationEngine);
+        $factory = new DiceFactory($this->engine->reveal());
 
         $dicePool = new DicePool($factory, '4d6dl1');
 
@@ -51,11 +55,9 @@ class DicePoolTest extends TestCase
 
     public function testGetTotal()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
-        $ranomizationEngine = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(1, 2, 3, 4);
 
-        $factory = new DiceFactory($ranomizationEngine);
+        $factory = new DiceFactory($this->engine->reveal());
 
         $dicePool = new DicePool($factory, '4d6');
 
@@ -64,11 +66,9 @@ class DicePoolTest extends TestCase
 
     public function testJsonSerialize()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
-        $ranomizationEngine = $prophet->reveal();
+        $this->engine->getValue(1, 6)->willReturn(1, 2, 3, 4);
 
-        $factory = new DiceFactory($ranomizationEngine);
+        $factory = new DiceFactory($this->engine->reveal());
 
         $dicePool = new DicePool($factory, '4d6dl1');
 
@@ -82,14 +82,12 @@ class DicePoolTest extends TestCase
 
     public function testToString()
     {
-        $prophet = $this->prophesize(RandomizationEngine::class);
-        $prophet->getValue(1, 6)->willReturn(1, 2, 3, 4);
-        $ranomizationEngine = $prophet->reveal();
+        $this->engine->getValue(1, 20)->willReturn(10, 12, 14, 20);
 
-        $factory = new DiceFactory($ranomizationEngine);
+        $factory = new DiceFactory($this->engine->reveal());
 
-        $dicePool = (string) new DicePool($factory, '4d6dl1');
+        $dicePool = (string) new DicePool($factory, '4d20dl1');
 
-        $this->assertEquals("[[2] [3] [4] [1\u{0336}] (9)]", $dicePool);
+        $this->assertEquals("[[12] [14] [20] [1\u{0336}0\u{0336}] = 46]", $dicePool);
     }
 }

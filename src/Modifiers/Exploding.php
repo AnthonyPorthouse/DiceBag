@@ -6,7 +6,7 @@ use DiceBag\Dice\DiceInterface;
 
 final class Exploding extends BaseModifier
 {
-    const MATCH = '/!(?<condition><|>)?(?<from>\d+)?/i';
+    protected const MATCH = '/!(?<condition><|>)?(?<from>\d+)?/i';
 
     /** @var int $explodeOn */
     private $explodeOn;

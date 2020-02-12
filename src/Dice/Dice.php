@@ -3,9 +3,9 @@ namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
 
-class Dice extends AbstractDice
+final class Dice extends AbstractDice
 {
-    const FORMAT = '/^(?<quantity>\d*)d(?<size>\d+)/i';
+    protected const FORMAT = '/^(?<quantity>\d*)d(?<size>\d+)/i';
 
     /**
      * Dice constructor.
