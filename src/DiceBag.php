@@ -1,11 +1,15 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Randomization\RandomInt;
 use DiceBag\Randomization\RandomizationEngine;
+use JsonSerializable;
 
-class DiceBag implements \JsonSerializable
+class DiceBag implements JsonSerializable
 {
     /** @var DicePool[] $dicePools */
     private $dicePools = [];

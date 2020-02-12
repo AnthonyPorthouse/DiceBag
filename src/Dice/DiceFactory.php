@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
@@ -32,6 +35,7 @@ class DiceFactory
     public function makeDice(string $diceString) : array
     {
         foreach (self::DICE_TYPES as $type) {
+            /** @var DiceInterface $type */
             if ($type::isValid($diceString)) {
                 return $type::make($this->randomizationEngine, $diceString);
             }

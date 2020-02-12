@@ -1,17 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag;
 
 use DiceBag\Dice\DiceFactory;
 use DiceBag\Dice\DiceInterface;
-use DiceBag\Exceptions\UnknownModifierException;
 use DiceBag\Modifiers\DropHighest;
 use DiceBag\Modifiers\DropLowest;
 use DiceBag\Modifiers\Exploding;
 use DiceBag\Modifiers\KeepHighest;
 use DiceBag\Modifiers\KeepLowest;
 use DiceBag\Modifiers\ModifierInterface;
+use JsonSerializable;
 
-class DicePool implements \JsonSerializable
+class DicePool implements JsonSerializable
 {
     /** @var DiceInterface[] $dice */
     private $dice = [];
@@ -114,7 +117,7 @@ class DicePool implements \JsonSerializable
      */
     public function getDroppedDice() : array
     {
-        $pool = array_udiff($this->originalDice, $this->dice, function (DiceInterface $a, DiceInterface $b) {
+        $pool = array_udiff($this->originalDice, $this->dice, static function (DiceInterface $a, DiceInterface $b) {
             return strcmp(spl_object_hash($a), spl_object_hash($b));
         });
 
@@ -128,7 +131,7 @@ class DicePool implements \JsonSerializable
      */
     public function getTotal() : int
     {
-        return array_reduce($this->dice, function (int $prev, DiceInterface $dice) {
+        return (int)array_reduce($this->dice, static function (int $prev, DiceInterface $dice) : int {
             return $prev + $dice->value();
         }, 0);
     }

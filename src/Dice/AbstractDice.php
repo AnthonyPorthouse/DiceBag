@@ -1,9 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
+use JsonSerializable;
 
-abstract class AbstractDice implements DiceInterface, \JsonSerializable
+abstract class AbstractDice implements DiceInterface, JsonSerializable
 {
     protected const FORMAT = '//i';
 

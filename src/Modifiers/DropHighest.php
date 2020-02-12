@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;

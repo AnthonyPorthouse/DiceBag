@@ -1,7 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Modifiers;
 
-abstract class BaseModifier implements ModifierInterface, \JsonSerializable
+use JsonSerializable;
+
+abstract class BaseModifier implements ModifierInterface, JsonSerializable
 {
     /** @var string $format */
     protected $format;
