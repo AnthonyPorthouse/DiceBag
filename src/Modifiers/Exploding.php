@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
@@ -6,7 +9,7 @@ use DiceBag\Dice\DiceInterface;
 
 final class Exploding extends BaseModifier
 {
-    const MATCH = '/!(?<condition><|>)?(?<from>\d+)?/i';
+    protected const MATCH = '/!(?<condition><|>)?(?<from>\d+)?/i';
 
     /** @var int $explodeOn */
     private $explodeOn;

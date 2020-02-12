@@ -21,6 +21,6 @@ class RollCommandTest extends TestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertRegexp('/^(\[(?:\[?\d+\]?\s?)+\w?\(\d+\)\](?:\s|\+)*)+(= \d+)$/', $output);
+        $this->assertRegexp('/^(\[(?:\[?\d+\]? ?)+\w? = \d+\](?: |\+)*)+(= \d+)$/', $output);
     }
 }

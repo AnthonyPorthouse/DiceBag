@@ -1,11 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
 
-class Dice extends AbstractDice
+final class Dice extends AbstractDice
 {
-    const FORMAT = '/^(?<quantity>\d*)d(?<size>\d+)/i';
+    protected const FORMAT = '/^(?<quantity>\d*)d(?<size>\d+)/i';
 
     /**
      * Dice constructor.
@@ -33,7 +36,7 @@ class Dice extends AbstractDice
         $pool = [];
 
         for ($i = 0; $i < ($tokens['quantity'] ?: 1); $i++) {
-            $pool[] = new static($randomization, $tokens['size']);
+            $pool[] = new static($randomization, (int)$tokens['size']);
         }
 
         return $pool;

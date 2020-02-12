@@ -1,11 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
 
 final class DropHighest extends BaseDropKeep
 {
-    const MATCH = '/dh(?<match>\d+)/i';
+    protected const MATCH = '/dh(?<match>\d+)/i';
 
     protected $keep = false;
     protected $highest = true;

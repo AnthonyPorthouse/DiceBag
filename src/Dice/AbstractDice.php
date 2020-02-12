@@ -1,11 +1,15 @@
 <?php
+
+declare(strict_types=1);
+
 namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
+use JsonSerializable;
 
-abstract class AbstractDice implements DiceInterface, \JsonSerializable
+abstract class AbstractDice implements DiceInterface, JsonSerializable
 {
-    const FORMAT = '//i';
+    protected const FORMAT = '//i';
 
     /** @var int $min */
     protected $min;
@@ -49,10 +53,12 @@ abstract class AbstractDice implements DiceInterface, \JsonSerializable
     /** {@inheritdoc} */
     public static function isValid(string $diceString) : bool
     {
-        return preg_match(static::FORMAT, $diceString);
+        return (bool)preg_match(static::FORMAT, $diceString);
     }
 
-    /** {@inheritdoc} */
+    /**
+     * @return array<int>
+     */
     public function jsonSerialize() : array
     {
         return [
