@@ -25,7 +25,7 @@ jobs:
         run: composer global require roave/backward-compatibility-check
 
       - name: Check Backwards Compatibility
-        run: roave-backward-compatibility-check --from=0.1.0
+        run: ~/.composer/vendor/bin/roave-backward-compatibility-check --from=0.1.0
 
   type-checking:
     name: Type Checking
