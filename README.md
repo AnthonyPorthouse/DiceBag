@@ -1,7 +1,6 @@
 # DiceBag
 
-[![Build Status](https://github.com/AnthonyPorthouse/DiceBag/workflows/ci/badge.svg)][Repo]
-[![Dependency Status](https://www.versioneye.com/php/porthou:dicebag/dev-master/badge?style=flat)]
+[![Build Status](https://github.com/AnthonyPorthouse/DiceBag/workflows/CI/badge.svg)][Repo]
 
 Create dice roll results from standard dice notation
 
