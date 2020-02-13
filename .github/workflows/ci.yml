@@ -17,7 +17,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: 7.4
           extensions: json
           tools: composer
 
@@ -39,11 +39,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: 7.4
           extensions: json
           tools: composer
 
-      - name: Install Dependancies
+      - name: Install Dependencies
         run: composer install
 
       - name: PHPStan
@@ -61,11 +61,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: 7.4
           extensions: json
           tools: composer
 
-      - name: Install Dependancies
+      - name: Install Dependencies
         run: composer install
 
       - name: PHP-CS-Fixer
@@ -79,7 +79,7 @@ jobs:
     strategy:
       matrix:
         php-version: ['7.1', '7.2', '7.3', '7.4']
-        deps: ['lowest', 'highest']
+        dependencies: ['lowest', 'highest']
 
     steps:
       - name: Checkout
@@ -92,11 +92,19 @@ jobs:
           extensions: json
           tools: composer
 
-      - name: Install Lowest Dependancies
+      - name: Cache Dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-
+
+      - name: Install Lowest Dependencies
         if: matrix.deps == 'lowest'
         run: composer update --no-interaction --no-suggest --prefer-lowest
 
-      - name: Install Lowest Dependancies
+      - name: Install Lowest Dependencies
         if: matrix.deps == 'highest'
         run: composer update --no-interaction --no-suggest
 
