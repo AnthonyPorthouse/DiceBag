@@ -22,7 +22,7 @@ jobs:
           tools: composer
 
       - name: Setup Backwards Compatibility Checker
-        run: composer global reqiure roave/backward-compatibility-check
+        run: composer global require roave/backward-compatibility-check
 
       - name: Check Backwards Compatibility
         run: roave-backward-compatibility-check --from=0.1.0
