@@ -87,10 +87,10 @@ This Drops the Highest `X` results from the dice pool.
 #### Exploding Dice `!cN`
 Exploding Dice add an additional dice to the pool if the maximum is rolled. These additional dice may also explode.
 
-If `N` is specified then the dice will explode on the value specified.
+If only `N` is specified then the dice will explode on the value specified.
 
-`c` is a conditional, which can be either `<` or `>`. When specified with `N` dice will explode when the value is either
-equal to or greater than, or equal to or less than, the value specified.
+`c` is a conditional, which can be either `<`, `>` or unspecified. When specified with `N` dice will explode when the value is either
+greater than or equal to, or less than or equal to, the value specified.
 
 ##### Examples
 + `4d6!` Rolls 4 d6 and and any results of 6 will add an additional die to the pool.
