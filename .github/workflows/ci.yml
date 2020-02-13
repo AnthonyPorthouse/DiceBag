@@ -22,7 +22,7 @@ jobs:
           tools: composer
 
       - name: Setup Backwards Compatibility Checker
-        run: composer global install roave/backward-compatibility-check
+        run: composer global reqiure roave/backward-compatibility-check
 
       - name: Check Backwards Compatibility
         run: roave-backward-compatibility-check --from=0.1.0
@@ -101,11 +101,11 @@ jobs:
             php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-
 
       - name: Install Lowest Dependencies
-        if: matrix.deps == 'lowest'
+        if: matrix.dependencies == 'lowest'
         run: composer update --no-interaction --no-suggest --prefer-lowest
 
       - name: Install Lowest Dependencies
-        if: matrix.deps == 'highest'
+        if: matrix.dependencies == 'highest'
         run: composer update --no-interaction --no-suggest
 
       - name: PHPUnit
