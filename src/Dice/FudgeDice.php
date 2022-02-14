@@ -26,7 +26,7 @@ final class FudgeDice extends AbstractDice
     }
 
     /** {@inheritdoc} */
-    public static function make(RandomizationEngine $randomization, string $diceString) : array
+    public static function make(RandomizationEngine $randomization, string $diceString): array
     {
         preg_match(static::FORMAT, $diceString, $tokens);
 

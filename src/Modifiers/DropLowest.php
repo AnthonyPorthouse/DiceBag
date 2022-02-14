@@ -14,7 +14,7 @@ final class DropLowest extends BaseDropKeep
     protected $highest = false;
 
     /** {@inheritdoc} */
-    public function apply(array $dice, DiceFactory $factory) : array
+    public function apply(array $dice, DiceFactory $factory): array
     {
         $dice = parent::apply($dice, $factory);
         return array_slice($dice, $this->match);

@@ -16,5 +16,5 @@ interface RandomizationEngine
      *
      * @return int
      */
-    public function getValue(int $min, int $max) : int;
+    public function getValue(int $min, int $max): int;
 }

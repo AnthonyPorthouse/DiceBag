@@ -1,4 +1,5 @@
 <?php
+
 namespace DiceBag\Modifiers;
 
 use DiceBag\Dice\DiceFactory;
@@ -6,9 +7,11 @@ use DiceBag\Dice\DiceInterface;
 use DiceBag\Dice\Modifier as DiceModifier;
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class KeepLowestTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @dataProvider modifierProvider
      *

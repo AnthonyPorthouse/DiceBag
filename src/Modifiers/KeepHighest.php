@@ -14,7 +14,7 @@ class KeepHighest extends BaseDropKeep
     protected $highest = true;
 
     /** {@inheritdoc} */
-    public function apply(array $dice, DiceFactory $factory) : array
+    public function apply(array $dice, DiceFactory $factory): array
     {
         $dice = parent::apply($dice, $factory);
         return array_slice($dice, 0 - $this->match);

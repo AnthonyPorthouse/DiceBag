@@ -17,7 +17,7 @@ final class Exploding extends BaseModifier
     private $condition;
 
     /** {@inheritdoc} */
-    public function apply(array $dice, DiceFactory $factory) : array
+    public function apply(array $dice, DiceFactory $factory): array
     {
         preg_match(static::MATCH, $this->format, $matches);
 
@@ -45,7 +45,7 @@ final class Exploding extends BaseModifier
      *
      * @return bool true if the value matches the condition against the condition value, false otherwise
      */
-    private function conditionCheck(string $condition, int $value, int $conditionValue) : bool
+    private function conditionCheck(string $condition, int $value, int $conditionValue): bool
     {
         if ($condition === '<') {
             return $value <= $conditionValue;
@@ -57,7 +57,7 @@ final class Exploding extends BaseModifier
     }
 
     /** {@inheritdoc} */
-    public function __toString() : string
+    public function __toString(): string
     {
         $condition = '=';
         if ($this->condition === '<') {

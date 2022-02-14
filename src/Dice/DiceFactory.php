@@ -32,7 +32,7 @@ class DiceFactory
      *
      * @return DiceInterface[]
      */
-    public function makeDice(string $diceString) : array
+    public function makeDice(string $diceString): array
     {
         foreach (self::DICE_TYPES as $type) {
             /** @var DiceInterface $type */
