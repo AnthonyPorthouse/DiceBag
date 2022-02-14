@@ -33,25 +33,25 @@ abstract class AbstractDice implements DiceInterface, JsonSerializable
     }
 
     /** {@inheritdoc} */
-    public function min() : int
+    public function min(): int
     {
         return $this->min;
     }
 
     /** {@inheritdoc} */
-    public function max() : int
+    public function max(): int
     {
         return $this->max;
     }
 
     /** {@inheritdoc} */
-    public function value() : int
+    public function value(): int
     {
         return $this->value;
     }
 
     /** {@inheritdoc} */
-    public static function isValid(string $diceString) : bool
+    public static function isValid(string $diceString): bool
     {
         return (bool)preg_match(static::FORMAT, $diceString);
     }
@@ -59,7 +59,7 @@ abstract class AbstractDice implements DiceInterface, JsonSerializable
     /**
      * @return array<int>
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'min' => $this->min(),
@@ -73,7 +73,7 @@ abstract class AbstractDice implements DiceInterface, JsonSerializable
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return '[' . $this->value() . ']';
     }

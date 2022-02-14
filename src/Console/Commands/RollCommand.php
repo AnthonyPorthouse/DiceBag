@@ -25,11 +25,15 @@ class RollCommand extends Command
     }
 
     /** {@inheritdoc} */
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $diceString = $input->getArgument('dice') ?? '';
         if (is_array($diceString)) {
             $diceString = implode(' ', $diceString);
+        }
+
+        if (!is_string($diceString)) {
+            throw new \InvalidArgumentException('Dice argument must be a string, or array of strings.');
         }
 
         $diceBag = DiceBag::factory($diceString);

@@ -39,7 +39,7 @@ class DiceBag implements JsonSerializable
      *
      * @return DiceBag
      */
-    public static function factory(string $diceString, RandomizationEngine $randomizationEngine = null) : DiceBag
+    public static function factory(string $diceString, RandomizationEngine $randomizationEngine = null): DiceBag
     {
         $randomizationEngine = $randomizationEngine ?? new RandomInt();
 
@@ -56,7 +56,7 @@ class DiceBag implements JsonSerializable
      *
      * @return DicePool[]
      */
-    public function getDicePools() : array
+    public function getDicePools(): array
     {
         return $this->dicePools;
     }
@@ -66,7 +66,7 @@ class DiceBag implements JsonSerializable
      *
      * @return int
      */
-    public function getTotal() : int
+    public function getTotal(): int
     {
         return array_reduce($this->dicePools, function (int $prev, DicePool $pool) {
             return $prev + $pool->getTotal();
@@ -76,7 +76,7 @@ class DiceBag implements JsonSerializable
     /**
      * @return mixed[]
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'pools' => $this->getDicePools(),
@@ -89,7 +89,7 @@ class DiceBag implements JsonSerializable
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return implode(' + ', $this->dicePools) . ' = ' . $this->getTotal();
     }

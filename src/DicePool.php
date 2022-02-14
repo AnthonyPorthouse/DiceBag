@@ -61,14 +61,16 @@ class DicePool implements JsonSerializable
      *
      * @return ModifierInterface[]
      */
-    private function setupModifiers(array $modifiers, string $diceString) : array
+    private function setupModifiers(array $modifiers, string $diceString): array
     {
-        return array_map(static function (string $modifierClass) use ($diceString) {
+        $modifiers = array_map(static function (string $modifierClass) use ($diceString) {
             if (!is_a($modifierClass, ModifierInterface::class, true) || !$modifierClass::isValid($diceString)) {
                 return null;
             }
             return new $modifierClass($diceString);
         }, $modifiers);
+
+        return array_filter($modifiers);
     }
 
     /**
@@ -80,10 +82,10 @@ class DicePool implements JsonSerializable
      *
      * @return DiceInterface[]
      */
-    private function applyModifiers(array $dice, DiceFactory $diceFactory, array $modifiers) : array
+    private function applyModifiers(array $dice, DiceFactory $diceFactory, array $modifiers): array
     {
         /** @var DiceInterface[] $dice */
-        $dice = array_reduce($modifiers, static function (array $dice, ModifierInterface $modifier) use ($diceFactory) : array {
+        $dice = array_reduce($modifiers, static function (array $dice, ModifierInterface $modifier) use ($diceFactory): array {
             return $modifier->apply($dice, $diceFactory);
         }, $dice);
 
@@ -105,7 +107,7 @@ class DicePool implements JsonSerializable
      *
      * @return DiceInterface[]
      */
-    public function getDice() : array
+    public function getDice(): array
     {
         return $this->dice;
     }
@@ -115,9 +117,12 @@ class DicePool implements JsonSerializable
      *
      * @return DiceInterface[]
      */
-    public function getDroppedDice() : array
+    public function getDroppedDice(): array
     {
-        $pool = array_udiff($this->originalDice, $this->dice, static function (DiceInterface $a, DiceInterface $b) {
+        $pool = array_udiff($this->originalDice, $this->dice, static function ($a, $b) {
+            if (! ($a instanceof DiceInterface) || !($b instanceof DiceInterface)) {
+                throw new \InvalidArgumentException("Both dice must implement ".DiceInterface::class);
+            }
             return strcmp(spl_object_hash($a), spl_object_hash($b));
         });
 
@@ -129,9 +134,9 @@ class DicePool implements JsonSerializable
      *
      * @return int
      */
-    public function getTotal() : int
+    public function getTotal(): int
     {
-        return (int)array_reduce($this->dice, static function (int $prev, DiceInterface $dice) : int {
+        return (int)array_reduce($this->dice, static function (int $prev, DiceInterface $dice): int {
             return $prev + $dice->value();
         }, 0);
     }
@@ -139,7 +144,7 @@ class DicePool implements JsonSerializable
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'appliedModifiers' => $this->getAppliedModifiers(),
@@ -154,9 +159,12 @@ class DicePool implements JsonSerializable
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
-        $droppedDice = array_udiff($this->originalDice, $this->dice, static function (DiceInterface $a, DiceInterface $b) {
+        $droppedDice = array_udiff($this->originalDice, $this->dice, static function ($a, $b) {
+            if (! ($a instanceof DiceInterface) || !($b instanceof DiceInterface)) {
+                throw new \InvalidArgumentException("Both dice must implement ".DiceInterface::class);
+            }
             return strcmp(spl_object_hash($a), spl_object_hash($b));
         });
 

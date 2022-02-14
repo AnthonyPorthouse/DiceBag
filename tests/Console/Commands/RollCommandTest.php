@@ -1,4 +1,5 @@
 <?php
+
 namespace DiceBag\Console\Commands;
 
 use PHPUnit\Framework\TestCase;
@@ -21,6 +22,6 @@ class RollCommandTest extends TestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertRegexp('/^(\[(?:\[?\d+\]? ?)+\w? = \d+\](?: |\+)*)+(= \d+)$/', $output);
+        $this->assertMatchesRegularExpression('/^(\[(?:\[?\d+\]? ?)+\w? = \d+\](?: |\+)*)+(= \d+)$/', $output);
     }
 }

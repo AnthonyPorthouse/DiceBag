@@ -24,12 +24,12 @@ abstract class BaseModifier implements ModifierInterface, JsonSerializable
     }
 
     /** {@inheritdoc} */
-    public static function isValid(string $format) : bool
+    public static function isValid(string $format): bool
     {
         return (bool)preg_match(static::MATCH, $format);
     }
 
-    public function jsonSerialize() : string
+    public function jsonSerialize(): string
     {
         return $this->__toString();
     }

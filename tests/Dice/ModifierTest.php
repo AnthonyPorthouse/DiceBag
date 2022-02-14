@@ -1,11 +1,15 @@
 <?php
+
 namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ModifierTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testGetModifierValue()
     {
         $randomizationDummy = $this->prophesize(RandomizationEngine::class);

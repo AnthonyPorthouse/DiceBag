@@ -16,7 +16,7 @@ interface ModifierInterface
      *
      * @return bool
      */
-    public static function isValid(string $diceFormat) : bool;
+    public static function isValid(string $diceFormat): bool;
 
     /**
      * Applies this modifier to this dice pool
@@ -26,12 +26,12 @@ interface ModifierInterface
      *
      * @return DiceInterface[]
      */
-    public function apply(array $dice, DiceFactory $diceFactory) : array;
+    public function apply(array $dice, DiceFactory $diceFactory): array;
 
     /**
      * A string interpretation of the Modifier
      *
      * @return string
      */
-    public function __toString() : string;
+    public function __toString(): string;
 }

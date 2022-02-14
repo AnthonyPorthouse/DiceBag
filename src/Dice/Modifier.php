@@ -29,7 +29,7 @@ final class Modifier extends AbstractDice
     }
 
     /** {@inheritdoc} */
-    public static function make(RandomizationEngine $randomization, string $diceString) : array
+    public static function make(RandomizationEngine $randomization, string $diceString): array
     {
         preg_match(static::FORMAT, $diceString, $tokens);
 
@@ -37,7 +37,7 @@ final class Modifier extends AbstractDice
     }
 
     /** {@inheritdoc} */
-    public function __toString() : string
+    public function __toString(): string
     {
         return (string)$this->value();
     }

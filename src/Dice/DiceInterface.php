@@ -6,28 +6,28 @@ namespace DiceBag\Dice;
 
 use DiceBag\Randomization\RandomizationEngine;
 
-interface DiceInterface
+interface DiceInterface extends \Stringable
 {
     /**
      * Returns the minimum value for the Dice
      *
      * @return int
      */
-    public function min() : int;
+    public function min(): int;
 
     /**
      * Returns the maximum value for the Dice
      *
      * @return int
      */
-    public function max() : int;
+    public function max(): int;
 
     /**
      * Returns the rolled value of the Dice
      *
      * @return int
      */
-    public function value() : int;
+    public function value(): int;
 
     /**
      * Checks is the dice string is a valid format for this dice
@@ -36,7 +36,7 @@ interface DiceInterface
      *
      * @return bool
      */
-    public static function isValid(string $diceString) : bool;
+    public static function isValid(string $diceString): bool;
 
     /**
      * Makes a dice of this type with the given dice string
@@ -46,5 +46,5 @@ interface DiceInterface
      *
      * @return DiceInterface[]
      */
-    public static function make(RandomizationEngine $randomization, string $diceString) : array;
+    public static function make(RandomizationEngine $randomization, string $diceString): array;
 }

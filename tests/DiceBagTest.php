@@ -1,11 +1,15 @@
 <?php
+
 namespace DiceBag;
 
 use DiceBag\Randomization\RandomizationEngine;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DiceBagTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var \Prophecy\Prophecy\ObjectProphecy|RandomizationEngine
      */

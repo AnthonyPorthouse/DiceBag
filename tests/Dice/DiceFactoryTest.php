@@ -1,4 +1,5 @@
 <?php
+
 namespace DiceBag\Dice;
 
 use DiceBag\Dice\Dice;
