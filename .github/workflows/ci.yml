@@ -72,7 +72,7 @@ jobs:
         run: composer install
 
       - name: PHP-CS-Fixer
-        run: ./vendor/bin/php-cs-fixer fix --diff-format=udiff --dry-run --using-cache=false --verbose
+        run: ./vendor/bin/php-cs-fixer fix --diff --dry-run --using-cache=no --verbose
 
   unit-tests:
     name: Unit Tests
